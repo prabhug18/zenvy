@@ -25,11 +25,20 @@ class ContactController extends Controller
     {
         $contact = $this->contact->save($request->all());
         if ($contact['status'] !== 'success') {
-            return $contact;
+            // If it's an AJAX request, return JSON; otherwise redirect back with errors
+            if ($request->expectsJson()) {
+                return $contact;
+            }
+            return redirect()->back()->withInput()->with('error', $contact['message'] ?? translate('Something went wrong!'));
         }
-        return response()->json([
-            'status' => $contact['status'],
-            'message' => translate('Thanks for Contact Us')
-        ]);
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'status' => $contact['status'],
+                'message' => translate('Thanks for Contact Us')
+            ]);
+        }
+
+        return redirect()->back()->with('success', translate('Thanks for Contact Us! We will get back to you shortly.'));
     }
 }

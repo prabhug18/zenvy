@@ -26,29 +26,27 @@
                 <nav class="flex-center !justify-start lg:!justify-end">
                     <ul class="flex items-center gap-x-5 gap-y-2 flex-wrap leading-none !text-white font-bold">
 
-                        @foreach ($menus as $menu)
-                            @if ($menu['name'] !== 'Pages' && $menu['name'] !== 'Theme')
-                                <li class="flex-center">
-                                    <a href="{{ $menu['url'] ?? '#' }}"
-                                        class="inline-block px-2 py-3 !text-white/80 hover:!text-white hover:text-primary hover:-translate-y-0.5 custom-transition"
-                                        aria-label="Footer menu">
-                                        {{ $menu['name'] }}
-                                    </a>
-                                </li>
-                            @endif
-                        @endforeach
-                        @foreach ($childMenus as $key => $menu)
-                            @php
-                                if ($key == 2) {
-                                    break;
-                                }
-                            @endphp
-                            <li class="flex-center">
-                                <a href="{{ $menu['url'] ?? '#' }}" aria-label="Menu link"
-                                    class="inline-block px-2 py-3 !text-white/80 hover:!text-white hover:text-primary hover:-translate-y-0.5 custom-transition">
-                                    {{ $menu['name'] }}</a>
-                            </li>
-                        @endforeach
+                        <li class="flex-center">
+                            <a href="https://zenvycoaching.com/terms-conditions"
+                                class="inline-block px-2 py-3 !text-white/80 hover:!text-white hover:text-primary hover:-translate-y-0.5 custom-transition"
+                                aria-label="Terms condition">
+                                Terms condition
+                            </a>
+                        </li>
+                        <li class="flex-center">
+                            <a href="https://zenvycoaching.com/privacy-policy"
+                                class="inline-block px-2 py-3 !text-white/80 hover:!text-white hover:text-primary hover:-translate-y-0.5 custom-transition"
+                                aria-label="Privacy Policy">
+                                Privacy Policy
+                            </a>
+                        </li>
+                        <li class="flex-center">
+                            <a href="https://zenvycoaching.com/refund-policy"
+                                class="inline-block px-2 py-3 !text-white/80 hover:!text-white hover:text-primary hover:-translate-y-0.5 custom-transition"
+                                aria-label="Refund Policy">
+                                Refund Policy
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>

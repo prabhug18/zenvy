@@ -1,5 +1,6 @@
 @php
-    $counter = get_theme_option(key: 'counter') ?? [];
+    $counter =100;
+    // $counter = get_theme_option(key: 'counter') ?? [];
     $satisfiedStudents = 10;
     // $satisfiedStudents = ($counter['satisfied_student'] ?? 0) / 1000 ;
     $satisfiedCounterData = $satisfiedStudents < 1 ? $satisfiedStudents * 1000 : $satisfiedStudents;
@@ -24,13 +25,15 @@
                 </div>
                 <div class="col-span-full sm:col-span-4 lg:col-span-3">
                     <div class="flex-center flex-col gap-3.5 text-center py-8 bg-white/10 rounded-xl border-2 border-dashed border-white/20 relative before:absolute before:size-full before:inset-0 before:border-2 before:border-dashed before:border-white/20 before:rounded-xl before:rotate-[-5deg] hover:before:rotate-0 before:duration-300">
-                        <h6 class="area-title !text-white leading-none"><span class="lms-counter" data-value="{{ $counter['expert_tutor'] ?? 0 }}">{{ $counter['expert_tutor'] ?? 0 }}</span>+</h6>
+                        <!-- <h6 class="area-title !text-white leading-none"><span class="lms-counter" data-value="{{ $counter['expert_tutor'] ?? 0 }}">{{ $counter['expert_tutor'] ?? 0 }}</span>+</h6> -->
+                        <h6 class="area-title !text-white leading-none"><span class="lms-counter" data-value="100">100</span>+</h6>
                         <div class="text-white/70 text-lg font-bold leading-none">{{ translate( 'Best Instructors' ) }}</div>
                     </div>
                 </div>
                 <div class="col-span-full sm:col-span-4 lg:col-span-3">
                     <div class="flex-center flex-col gap-3.5 text-center py-8 bg-white/10 rounded-xl border-2 border-dashed border-white/20 relative before:absolute before:size-full before:inset-0 before:border-2 before:border-dashed before:border-white/20 before:rounded-xl before:rotate-[-5deg] hover:before:rotate-0 before:duration-300">
-                        <h6 class="area-title !text-white leading-none"><span class="lms-counter" data-value="{{ $counter['total_experience'] ?? 0 }}">{{ $counter['total_experience'] ?? 0 }}</span>+</h6>
+                        <!-- <h6 class="area-title !text-white leading-none"><span class="lms-counter" data-value="{{ $counter['total_experience'] ?? 0 }}">{{ $counter['total_experience'] ?? 0 }}</span>+</h6> -->
+                        <h6 class="area-title !text-white leading-none"><span class="lms-counter" data-value="50">50</span>+</h6>
                         <div class="text-white/70 text-lg font-bold leading-none">{{ translate( 'Years of experience' ) }}</div>
                     </div>
                 </div>
