@@ -20,7 +20,7 @@ class TestimonialRepository extends BaseRepository
         'save' => [
             'name' => 'required|string',
             'designation' => 'required|string',
-            'rating' => 'required|numeric|min:1|max:5',
+            'rating' => 'required',
             'image' => 'required|image|mimes:jpg,jpeg,png,svg,webp',
             'comments' => 'required',
         ],
