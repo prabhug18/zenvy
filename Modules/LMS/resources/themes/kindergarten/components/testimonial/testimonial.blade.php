@@ -1,6 +1,5 @@
 @php
     $testimonials = $testimonials ?? [];
-    $backgrounds = ['bg-[#DEC8FE]', 'bg-[#FBD983]', 'bg-[#D5EEB4]', 'bg-[#E6F3EB]'];
 @endphp
 
 @if ($testimonials->count() > 0)
@@ -31,7 +30,7 @@
                                 fileExists('lms/testimonials', $testimonial->profile_image) && $testimonial->profile_image != ''
                                 ? asset($profileImagePath)
                                 : asset($defaultProfileImage);
-                            $bgColor = $backgrounds[$index % count($backgrounds)];
+                            $bgColor = 'bg-[#D5EEB4]';
                         @endphp
                         <div class="swiper-slide h-auto pb-10">
                             <!-- Card Background -->

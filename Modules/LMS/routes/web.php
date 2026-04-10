@@ -38,6 +38,7 @@ use Modules\LMS\Http\Controllers\Admin\Courses\Quizzes\QuizController;
 Route::group(['middleware' => ['checkInstaller']], function () {
     // Home
     Route::group(['controller' => HomeController::class], function () {
+        Route::get('refund-policy',  'refundPolicy')->name('refund.policy');
         Route::get('/',  'index')->name('home.index');
         Route::get('/about-us',  'aboutUs')->name('about.us');
         Route::get('/category-course/{slug}',  'categoryCourse')->name('category.course');

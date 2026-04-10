@@ -1,5 +1,5 @@
 @php
-    $locale = request()->locale ?? app()->getLocale();
+    $locale = request()->get('locale') ?? app()->getLocale();
     $translations = [];
     $testimonial = $testimonial ?? null;
     if ($testimonial && $locale) {
@@ -72,8 +72,11 @@
                             <span class="text-danger error-text rating_err"></span>
                         </div>
                         <div class="mt-6">
-                            <label for="testimonial-content" class="form-label">{{ translate('Description') }}</label>
+                            <label for="testimonial-content" class="form-label">{{ translate('Description') }}<span
+                                    class="text-danger"
+                                    title="{{ translate('This field is required') }}"><b>*</b></span></label>
                             <textarea class="summernote form-input" name="comments">{!! clean($translations['comments'] ?? $testimonial->comments ?? '') !!}</textarea>
+                            <span class="text-danger error-text comments_err"></span>
                         </div>
                     </div>
 

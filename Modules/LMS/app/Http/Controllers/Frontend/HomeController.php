@@ -11,9 +11,18 @@ use Modules\LMS\Repositories\HomeRepository;
 use Modules\LMS\Repositories\Auth\UserRepository;
 use Modules\LMS\Repositories\Courses\CourseRepository;
 
-
 class HomeController extends Controller
 {
+    public function refundPolicy()
+    {
+        // no need to translate function because this title translation into breadcrumb card
+        $title = "Refund Policy";
+        $page = Page::where('url', 'refund-policy')->first();
+        if (!$page) {
+            return view('theme::404');
+        }
+        return view('theme::page', compact('title', 'page'));
+    }
     public function __construct(
         protected UserRepository $user,
         protected HomeRepository $home,
