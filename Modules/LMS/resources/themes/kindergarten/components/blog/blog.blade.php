@@ -9,7 +9,7 @@
             <div class="col-span-full text-center max-w-[500px] mx-auto">
                 <h2 class="area-title">
                     {{ translate('Explore Our Latest') }}
-                    <span class="title-highlight-two">{{ translate('News & Articles') }}</span>
+                    <span class="title-highlight-two">{{ translate('Blogs') }}</span>
                 </h2>
             </div>
         </div>

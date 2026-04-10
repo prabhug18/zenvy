@@ -4,8 +4,8 @@
 
     $defaultFavIcon =
         isset($logo['favicon']) && fileExists('lms/theme-options', $logo['favicon']) == true
-            ? asset("storage/lms/theme-options/{$logo['favicon']}")
-            : asset('lms/frontend/assets/images/favicon.svg');
+        ? asset("storage/lms/theme-options/{$logo['favicon']}")
+        : asset('lms/frontend/assets/images/favicon.svg');
     $favIcon = $data['fav_icon'] ?? $defaultFavIcon;
 
     $customScript = get_theme_option('custom_script') ?? [];

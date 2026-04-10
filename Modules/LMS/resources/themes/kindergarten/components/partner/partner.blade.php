@@ -1,4 +1,4 @@
-<div class="container pt-16 sm:pt-24 lg:pt-[120px]">
+<!-- <div class="container pt-16 sm:pt-24 lg:pt-[120px]">
     <h2 class="area-title !text-xl text-center">{{ translate( 'Trusted by Companies All Over the World' ) }}</h2>
     <div class="border border-heading/10 mt-10">
         <div class="swiper trusted-partner-five-slider">
@@ -56,4 +56,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

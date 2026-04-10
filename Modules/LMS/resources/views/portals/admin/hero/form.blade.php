@@ -23,7 +23,7 @@
                 <select name="theme_id" class="form-label singleSelect">
                     <option selected disabled> {{ translate('Select Theme') }}</option>
                     @foreach (get_themes() as $key => $theme)
-                        @if( $theme->name == 'Default')
+                        @if( $theme->name == 'Kindergarten')
                         <option value="{{ $theme->id }}"
                             {{ isset($hero) && $hero->theme_id == $theme->id ? 'selected' : '' }}>
                             {{ $theme->name }}</option>

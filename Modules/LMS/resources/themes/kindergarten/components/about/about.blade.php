@@ -46,12 +46,12 @@
                 <div class="bg-[#F0F6E8] px-9 py-11 rounded-xl h-full">
                     <div class="flex items-start gap-3">
                         <div class="size-14 rounded-50 flex-center bg-primary text-white p-2 shrink-0">
-                            <i class="ri-customer-service-2-line text-2xl"></i>
+                            <i class="ri-presentation-fill text-2xl"></i>
                         </div>
                         <div class="grow">
-                            <h6 class="area-title text-xl !leading-none">{{ translate('Educator Support') }}</h6>
-                            <div class="area-description text-base line-clamp-3 mt-3">
-                                {{ translate('Majority have suffered alteration in some form, by injected humour There are many variations.') }}
+                            <h6 class="area-title text-xl !leading-none">{{ translate('Expert-Led Training') }}</h6>
+                            <div class="area-description text-base mt-3">
+                                {{ translate('Learn from experienced trainers who specialize in Abacus and Vedic Maths. Our teaching methods are designed to make concepts simple, engaging, and easy to understand for every child.') }}
                             </div>
                         </div>
                     </div>
@@ -61,12 +61,12 @@
                 <div class="bg-[#F4F4FF] px-9 py-11 rounded-xl h-full">
                     <div class="flex items-start gap-3">
                         <div class="size-14 rounded-50 flex-center bg-blue-700 text-white p-2 shrink-0">
-                            <i class="ri-group-line text-2xl"></i>
+                            <i class="ri-bar-chart-fill text-2xl"></i>
                         </div>
                         <div class="grow">
-                            <h6 class="area-title text-xl !leading-none">{{ translate('Top Instructors') }}</h6>
-                            <div class="area-description text-base line-clamp-3 mt-3">
-                                {{ translate('Majority have suffered alteration in some form, by injected humour There are many variations.') }}
+                            <h6 class="area-title text-xl !leading-none">{{ translate('Structured Learning Levels') }}</h6>
+                            <div class="area-description text-base mt-3">
+                                {{ translate('Our courses are divided into levels from beginner to advanced, ensuring step-by-step learning and continuous improvement in speed, accuracy, and confidence.') }}
                             </div>
                         </div>
                     </div>
@@ -76,12 +76,12 @@
                 <div class="bg-[#F0F6E8] px-9 py-11 rounded-xl h-full">
                     <div class="flex items-start gap-3">
                         <div class="size-14 rounded-50 flex-center bg-secondary text-white p-2 shrink-0">
-                            <i class="ri-award-fill text-2xl"></i>
+                            <i class="ri-brain-line text-2xl"></i>
                         </div>
                         <div class="grow">
-                            <h6 class="area-title text-xl !leading-none">{{ translate('Best Award Wining') }}</h6>
-                            <div class="area-description text-base line-clamp-3 mt-3">
-                                {{ translate('Majority have suffered alteration in some form, by injected humour There are many variations.') }}
+                            <h6 class="area-title text-xl !leading-none">{{ translate('Proven Skill Development') }}</h6>
+                            <div class="area-description text-base mt-3">
+                                {{ translate('Improve concentration, memory, and calculation speed through scientifically designed programs that enhance both academic performance and brain development.') }}
                             </div>
                         </div>
                     </div>

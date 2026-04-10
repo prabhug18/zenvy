@@ -4,8 +4,8 @@
         <div class="grid grid-cols-12 gap-4 items-center">
             <div class="col-span-full text-center max-w-[640px] mx-auto">
                 <h2 class="area-title">
-                    {{ translate('The Work Process of Our') }}
-                    <span class="title-highlight-two">{{ translate('kindergarten School') }}</span>
+                    {{ translate('How Our Learning Program') }}
+                    <span class="title-highlight-two">{{ translate('From Basics to Mastery') }}</span>
                 </h2>
             </div>
         </div>
@@ -21,10 +21,10 @@
                                     class="font-secondary text-primary text-2xl !leading-none italic font-semibold -mb-1">
                                     01</div>
                             </div>
-                            <h6 class="area-title text-xl !leading-none mt-5">{{ translate('Morning Circle Time') }}
+                            <h6 class="area-title text-xl !leading-none mt-5 text-purple-900">{{ translate('Enroll & Get Started') }}
                             </h6>
-                            <div class="area-description text-base line-clamp-2 mt-3">
-                                {{ translate("Children gather to discuss the day's plan, engage in songs, and share stories to build a sense of community and routine'") }}
+                            <div class="area-description text-base line-clamp-4 mt-3">
+                                {{ translate("Choose your course and start with a simple introduction session. We assess the student’s level and guide them into the right program.") }}
                             </div>
                         </div>
                     </div>
@@ -38,10 +38,10 @@
                                     class="font-secondary text-primary text-2xl !leading-none italic font-semibold -mb-1">
                                     02 </div>
                             </div>
-                            <h6 class="area-title text-xl !leading-none mt-5">{{ translate('Learning Through Play') }}
+                            <h6 class="area-title text-xl !leading-none mt-5 text-yellow-900">{{ translate('Interactive Learning Sessions') }}
                             </h6>
-                            <div class="area-description text-base line-clamp-2 mt-3">
-                                {{ translate('Activities like puzzles, crafts, and role-playing encourage creativity, problem-solving, and motor skill development.') }}
+                            <div class="area-description text-base line-clamp-4 mt-3">
+                                {{ translate('Students learn through engaging lessons, practical exercises, and fun activities designed to improve calculation speed and brain power.') }}
                             </div>
                         </div>
                     </div>
@@ -55,10 +55,10 @@
                                     class="font-secondary text-primary text-2xl !leading-none italic font-semibold -mb-1">
                                     03 </div>
                             </div>
-                            <h6 class="area-title text-xl !leading-none mt-5">{{ translate('Snack and Rest Period') }}
+                            <h6 class="area-title text-xl !leading-none mt-5 text-green-900">{{ translate('Practice & Skill Development') }}
                             </h6>
-                            <div class="area-description text-base line-clamp-2 mt-3">
-                                {{ translate('Scheduled time for nutritious snacks and relaxation to recharge, promoting healthy habits and well-being.') }}
+                            <div class="area-description text-base line-clamp-4 mt-3">
+                                {{ translate('Regular practice, quizzes, and assessments help students improve accuracy, speed, and confidence step by step.') }}
                             </div>
                         </div>
                     </div>

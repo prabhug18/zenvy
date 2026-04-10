@@ -7,6 +7,8 @@
 
 <footer class="{{ $wrapper_class }}" style="{{ $wrapper_style }}">
     <!-- START TOP -->
-    <x-dynamic-component component='{{ "{$theme}:theme::footer.content" }}' :theme="$theme" :content="$footer" :data="$data" />
-    <x-dynamic-component component='{{ "{$theme}:theme::footer.bottom" }}' :theme="$theme" :content="$footer" :data="$data" />
+    <x-dynamic-component component='{{ "{$theme}:theme::footer.content" }}' :theme="$theme" :content="$footer"
+        :data="$data" />
+    <x-dynamic-component component='{{ "{$theme}:theme::footer.bottom" }}' :theme="$theme" :content="$footer"
+        :data="$data" />
 </footer>

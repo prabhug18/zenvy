@@ -50,19 +50,18 @@ class HomeRepository extends BaseRepository
                         'courses',
                         function ($query) {
                             $query->where('status', CourseStatus::APPROVED)
-                                ->withWhereHas(
-                                    'instructors',
-                                    function ($query1) {
-                                        $query1->where('is_verify', 1)
-                                            ->with(
-                                                'userable',
-                                                function ($query2) {
-                                                    $query2->where('status', 1);
-                                                }
-                                            );
-                                    }
-                                )
-                                ->with('courseSetting');
+                                ->where(function($q) {
+                                    $q->whereHas('instructors', function ($query1) {
+                                        $query1->whereHas('userable', function ($query2) {
+                                                $query2->where('status', 1);
+                                            });
+                                    })->orWhereDoesntHave('instructors');
+                                })
+                                ->with(['instructors' => function ($query1) {
+                                    $query1->with(['userable' => function ($query2) {
+                                            $query2->where('status', 1);
+                                        }]);
+                                }, 'courseSetting']);
                         }
                     ]
                 ],

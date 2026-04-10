@@ -15,9 +15,9 @@
             ? asset("storage/lms/theme-options/{$logo['favicon']}")
             : asset('lms/frontend/assets/images/favicon.ico');
 
-    $headerClass = 'bg-white sticky-header';
-    $headerWrapperClass = 'flex-center-between py-4';
-    $rightActionsWrapperClass = 'self-end flex items-center gap-5';
+    $headerClass = 'bg-white sticky-header py-1';
+    $headerWrapperClass = 'flex items-center justify-between py-4';
+    $rightActionsWrapperClass = 'flex items-center gap-5';
     $menuClass = [];
     $searchClass = [];
     $active_theme_slug = active_theme_slug();
@@ -58,11 +58,11 @@
             'is_show' => false,
         ],
         'header' => [
-            'theme' => $active_theme_slug,
+            'theme' => 'default',
         ],
         'footer' => [
             'wrapper_class' =>
-                'bg-gradient-to-b from-[#FEFBF0] to-[#E6F3EB] mt-16 sm:mt-24 lg:mt-[120px] relative overflow-hidden',
+                'bg-heading mt-16 sm:mt-24 lg:mt-[120px] relative overflow-hidden',
             'theme' => active_theme_slug(),
         ],
     ];

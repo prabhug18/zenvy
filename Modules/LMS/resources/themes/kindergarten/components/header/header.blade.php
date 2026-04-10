@@ -19,9 +19,9 @@
             <x-dynamic-component component='{{ "default:theme::header.{$innerHeaderTop}" }}' />
         @endif
         <div class="{{ $headerWrapperClass }}">
-            <x-dynamic-component component='{{ "default:theme::header.logo" }}' :theme="$theme" :data="$data" :default-logo="$data['default_logo'] ?? null" />
-            <x-dynamic-component component='{{ "default:theme::header.menu-one" }}' :menus="$data['menus'] ?? get_menus()" :theme="$theme"
-                :class="$data['menu_class'] ?? []" />
+            <x-dynamic-component component='{{ "default:theme::header.logo" }}' :theme="$theme" :data="$data"
+                :default-logo="$data['default_logo'] ?? null" />
+            <x-dynamic-component component='{{ "default:theme::header.menu-one" }}' :menus="$data['menus'] ?? get_menus()" :theme="$theme" :class="$data['menu_class'] ?? []" />
             <!-- ACTIONS -->
             <div class="{{ $rightActionsWrapperClass }}">
                 <!-- SEARCH -->
@@ -29,9 +29,10 @@
                     <x-dynamic-component component='{{ "default:theme::header.search" }}' :theme="$theme"
                         :class="$data['search_class'] ?? []" />
                 @endif
-                <x-dynamic-component component='{{ "default:theme::header.right-side" }}' :theme="$theme" :data="$data" is-show-language="true" text-color="text-heading" />
+                <x-dynamic-component component='{{ "default:theme::header.right-side" }}' :theme="$theme" :data="$data"
+                    is-show-language="true" text-color="text-heading" />
 
-                  <!-- MENU BUTTON -->
+                <!-- MENU BUTTON -->
                 @if (!isset($style))
                     <div class="flex-center lg:hidden shrink-0">
                         <button type="button" aria-label="Offcanvas menu" data-offcanvas-id="offcanvas-menu"

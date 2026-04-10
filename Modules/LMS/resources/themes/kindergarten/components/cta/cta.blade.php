@@ -1,4 +1,4 @@
-<div class="pt-16 sm:pt-24 lg:pt-[120px] mb-[-300px] relative z-[2]">
+<!-- <div class="pt-16 sm:pt-24 lg:pt-[120px] mb-[-300px] relative z-[2]">
     <div class="container">
         <div class="bg-[#17423B] md:bg-[url('/lms/frontend/assets/images/cta/bg.png')] bg-no-repeat bg-contain bg-right rounded-2xl px-5 xl:px-[90px] rtl:rotate-xz-180">
             <div class="grid grid-cols-12 gap-7 rtl:rotate-xz-180">
@@ -20,4 +20,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

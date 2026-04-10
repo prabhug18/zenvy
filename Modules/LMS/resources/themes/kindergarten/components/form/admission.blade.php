@@ -19,11 +19,11 @@
             <div class="col-span-full lg:col-span-7">
                 <div class="bg-gradient-to-b from-[#FEFBF0] to-[#E6F3EB] px-5 py-8 xl:p-20 h-full">
                     <h2 class="area-title">
-                        {{ translate('Apply For') }}
-                        <span class="title-highlight-two">{{ translate('Admission') }}</span>
+                        {{ translate('Enroll Your Child In Smart') }}
+                        <span class="title-highlight-two">{{ translate('Learning Programs') }}</span>
                     </h2>
                     <div class="area-description mt-3 line-clamp-2">
-                        {{ translate('Our streamlined admission process makes it easy to enroll in courses that fit your career aspirations') }}
+                        {{ translate('Give your child the advantage of faster calculations, better memory, and improved focus with our programs.') }}
                     </div>
                     <x-theme::form.join-us.form :data="$settings" />
                 </div>

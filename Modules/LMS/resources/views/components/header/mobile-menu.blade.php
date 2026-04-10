@@ -11,8 +11,13 @@
         <div class="my-5 px-4 overflow-x-hidden grow">
             <ul class="text-lg leading-none text-heading dark:text-white font-medium">
                 <li>
-                    <a href="{{ route('home.index') }}" aria-label="Menu link" class="inline-block w-full py-3 hover:text-primary [&.active]:text-primary custom-transition active">
+                    <a href="{{ route('home.index') }}" aria-label="Menu link" class="inline-block w-full py-3 hover:text-primary [&.active]:text-primary custom-transition {{ is_active('home.index') }}">
                         {{ translate('Home') }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('about.us') }}" aria-label="Menu link" class="inline-block w-full py-3 hover:text-primary [&.active]:text-primary custom-transition {{ is_active('about.us') }}">
+                        {{ translate('About Us') }}
                     </a>
                 </li>
                 <li>
@@ -20,28 +25,7 @@
                         {{ translate('Course') }}
                     </a>
                 </li>
-                <li>
-                    <a href="#" class="inline-block w-full py-3 hover:text-primary [&.active]:text-primary custom-transition">
-                        {{ translate('Pages') }}
-                    </a>
-                    <ul class="flex flex-col">
-                        <li>
-                            <a href="{{ route('bundle.list') }}" aria-label="Menu link" class="sub-menu-link">
-                                {{ translate('Course Bundle') }}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('instructor.list') }}" aria-label="Menu link" class="sub-menu-link">
-                                {{ translate('Instructor') }}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('organization.list') }}" aria-label="Menu link" class="sub-menu-link">
-                                {{ translate('Organization') }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+
                 <li>
                     <a href="{{ route('blog.list') }}" aria-label="Menu link" class="inline-block w-full py-3 hover:text-primary [&.active]:text-primary custom-transition">
                         {{ translate('Blogs') }}

@@ -8,13 +8,13 @@
         <div class="grid grid-cols-12 gap-4 items-center">
             <div class="col-span-full md:col-span-6 lg:pr-20">
                 <h2 class="area-title">
-                    {{ translate( 'Meet Our Top Creative' ) }}
-                    <span class="title-highlight-two">{{ translate( 'School Instructors' ) }}</span>
+                    {{ translate( 'Learn from Our Expert' ) }}
+                    <span class="title-highlight-two">{{ translate( 'Instructors' ) }}</span>
                 </h2>
             </div>
             <div class="col-span-full md:col-span-6 md:justify-self-end">
                 <a href="{{ route('instructor.list') }}" aria-label="See All Teacher" class="btn b-solid btn-primary-solid btn-lg !text-base !px-8 !rounded-full font-bold">
-                    {{ translate( 'See All Teacher' ) }}
+                    {{ translate( 'See All Instructors' ) }}
                 </a>
             </div>
         </div>
