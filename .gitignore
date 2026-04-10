@@ -19,7 +19,7 @@ yarn-error.log
 /.idea
 /.vscode
 public/lms/assets/css/output.min.css
-public/lms/frontend/assets/css/output.min.css
+# public/lms/frontend/assets/css/output.min.css
 *.zip
 /public/demo.sql
 /Modules/LMS/storage
