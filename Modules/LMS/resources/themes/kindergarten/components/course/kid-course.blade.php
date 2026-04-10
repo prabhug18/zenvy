@@ -1,5 +1,5 @@
 @php 
-        $courses = $courses ?? [];
+            $courses = $courses ?? [];
     $courseCategories = $courseCategories ?? [];
 @endphp
 

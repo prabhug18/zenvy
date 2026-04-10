@@ -26,13 +26,13 @@
                             {{ $aboutUs['highlight_title'] ?? '' }}
                         </span>
                     </h2>
-                    <div class="area-description mt-2.5 line-clamp-3">
+                    <div class="area-description mt-2">
                         {{ $aboutUs['short_description'] ?? '' }}
                     </div>
-                    <div
-                        class="font-medium text-sm leading-[1.44] mt-10 [&>:not(:first-child)]:mt-3 [&_li]:flex [&_li]:items-start [&_li]:gap-2 [&_li]:before:font-remix [&_li]:before:content-['\f0ff'] [&_li]:before:text-primary [&_li]:before:text-[18px]">
+                    <!-- <div
+                        class="area-description mt-5 font-bold text-lg">
                         {!! clean($aboutUs['add_description'] ?? '') !!}
-                    </div>
+                    </div> -->
                     <a href="{{ route('about.us') }}" aria-label="Read More About"
                         title="{{ translate('Read More About us') }}"
                         class="btn b-solid btn-primary-solid btn-lg !px-7 !rounded-full !text-base font-bold shrink-0 mt-11">

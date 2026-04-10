@@ -1,7 +1,9 @@
 @php
     $counter = get_theme_option(key: 'counter') ?? [];
-    $satisfiedStudents = ($counter['satisfied_student'] ?? 0) / 1000 ;
+    $satisfiedStudents = 10;
+    // $satisfiedStudents = ($counter['satisfied_student'] ?? 0) / 1000 ;
     $satisfiedCounterData = $satisfiedStudents < 1 ? $satisfiedStudents * 1000 : $satisfiedStudents;
+    
 @endphp
 
 <div class="mx-3 mt-16 sm:mt-24 lg:mt-[120px] relative z-[1]">

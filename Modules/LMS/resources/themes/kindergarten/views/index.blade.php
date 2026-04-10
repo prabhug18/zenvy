@@ -118,6 +118,10 @@
     <x-kindergarten:theme::blog.blog :blogs="$data['blogs']" />
     <!-- END LATEST NEWS AND BLOG AREA -->
 
+    <!-- START TESTIMONIAL AREA -->
+    <x-kindergarten:theme::testimonial.testimonial :testimonials="$data['testimonials']" />
+    <!-- END TESTIMONIAL AREA -->
+
     <!-- START CTA BANNER -->
     <x-kindergarten:theme::cta.cta />
     <!-- END CTA BANNER -->

@@ -21,7 +21,8 @@
                                     class="font-secondary text-primary text-2xl !leading-none italic font-semibold -mb-1">
                                     01</div>
                             </div>
-                            <h6 class="area-title text-xl !leading-none mt-5 text-purple-900">{{ translate('Enroll & Get Started') }}
+                            <h6 class="area-title text-xl !leading-none mt-5 text-purple-900">
+                                {{ translate('Enroll & Get Started') }}
                             </h6>
                             <div class="area-description text-base line-clamp-4 mt-3">
                                 {{ translate("Choose your course and start with a simple introduction session. We assess the student’s level and guide them into the right program.") }}
@@ -38,7 +39,8 @@
                                     class="font-secondary text-primary text-2xl !leading-none italic font-semibold -mb-1">
                                     02 </div>
                             </div>
-                            <h6 class="area-title text-xl !leading-none mt-5 text-yellow-900">{{ translate('Interactive Learning Sessions') }}
+                            <h6 class="area-title text-xl !leading-none mt-5 text-yellow-900">
+                                {{ translate('Interactive Learning Sessions') }}
                             </h6>
                             <div class="area-description text-base line-clamp-4 mt-3">
                                 {{ translate('Students learn through engaging lessons, practical exercises, and fun activities designed to improve calculation speed and brain power.') }}
@@ -55,7 +57,8 @@
                                     class="font-secondary text-primary text-2xl !leading-none italic font-semibold -mb-1">
                                     03 </div>
                             </div>
-                            <h6 class="area-title text-xl !leading-none mt-5 text-green-900">{{ translate('Practice & Skill Development') }}
+                            <h6 class="area-title text-xl !leading-none mt-5 text-green-900">
+                                {{ translate('Practice & Skill Development') }}
                             </h6>
                             <div class="area-description text-base line-clamp-4 mt-3">
                                 {{ translate('Regular practice, quizzes, and assessments help students improve accuracy, speed, and confidence step by step.') }}

@@ -1,4 +1,4 @@
-{{-- @if (isset($course->courseOutComes) && !empty($course->courseOutComes))
+ @if (isset($course->courseOutComes) && !empty($course->courseOutComes))
     <article>
         <h2 class="area-title xl:text-3xl mb-5">
             {{ translate('Learning Outcomes') }}
@@ -11,4 +11,4 @@
             @endforeach
         </ul>
     </article>
-@endif --}}
+@endif 

@@ -55,7 +55,7 @@
                                         </a>
                                     @endif
                                     <!-- TRUSTED STUDENT LIST -->
-                                    @if (count($students) > 0)
+                                    <!-- @if (count($students) > 0)
                                         <div class="flex items-center gap-2.5 mt-8">
                                             <ul
                                                 class="flex items-center [&>:not(:first-child)]:-ml-3 rtl:[&>:not(:first-child)]:ml-0 rtl:[&>:not(:first-child)]:-mr-3">
@@ -83,7 +83,7 @@
                                                 {{ translate('already') }}
                                             </div>
                                         </div>
-                                    @endif
+                                    @endif -->
                                 </div>
                                 <div class="col-span-full lg:col-span-5 xl:col-span-6 hidden lg:block justify-self-end">
                                     <div

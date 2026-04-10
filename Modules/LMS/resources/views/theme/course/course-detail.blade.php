@@ -112,11 +112,11 @@
                             data-tab="courseOverview">
                             <x-theme::course.details.course-overview :course="$course" :translations="$translations" />
 
-                            {{-- <x-theme::course.details.course-outcome :course="$course" />
+                            <x-theme::course.details.course-outcome :course="$course" />
 
                             <x-theme::course.details.course-requirement :course="$course" />
 
-                            <x-theme::course.details.course-faq :course="$course" /> --}}
+                            {{-- <x-theme::course.details.course-faq :course="$course" /> --}}
                         </div>
 
                         <!-- COURSE CURRICULUM CONTENT -->

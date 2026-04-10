@@ -1,4 +1,4 @@
-{{-- @if (isset($course->courseRequirements) && !empty($course->courseRequirements))
+@if (isset($course->courseRequirements) && !empty($course->courseRequirements))
     <article>
         <h2 class="area-title xl:text-3xl mb-5">{{ translate('Course Requirements') }}</h2>
         <ul class="text-heading dark:text-white font-medium list-image-none [&>:not(:first-child)]:mt-2">
@@ -9,4 +9,4 @@
             @endforeach
         </ul>
     </article>
-@endif --}}
+@endif 

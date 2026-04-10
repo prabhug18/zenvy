@@ -60,6 +60,7 @@ class HomeController extends Controller
                     'bundles',
                     'course_categories',
                     'instructors',
+                    'testimonials',
                     'subscriptions',
                     'blogs',
                     'category_item' => 8,

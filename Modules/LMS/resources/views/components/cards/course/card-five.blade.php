@@ -22,12 +22,12 @@
     <div class="px-8 pb-5 mt-6 flex-center flex-col text-center grow">
         <h6
             class="area-title font-bold !text-xl group-hover/kid-course:text-white duration-300 hover:!text-heading custom-transition">
-            <a href="{{ route('course.detail', $course->slug) }}" class="line-clamp-1"
+            <a href="{{ route('course.detail', $course->slug) }}" class=""
                 aria-label="Course category link">
                 {{ $translations['title'] ?? ($course->title ?? '') }}
             </a>
         </h6>
-        <div class="area-description group-hover/kid-course:text-white duration-300 mt-2.5">
+        <div class="area-description group-hover/kid-course:text-white duration-300 mt-4">
             {!! clean($translations['short_description'] ?? ($course->short_description ?? '')) !!}
         </div>
         <div class="flex items-center gap-3 mt-6">
