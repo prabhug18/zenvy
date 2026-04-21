@@ -16,7 +16,7 @@
         <div class="container">
             <div class="grid grid-cols-2">
                 <div class="col-span-full lg:col-auto bg-primary-50 py-16 sm:py-24 lg:py-[120px]">
-                    <h5 class="area-title">{{ translate('Free Consultation') }}</h5>
+                    <h5 class="area-title">{{ translate('Enquire Us') }}</h5>
                     <x-theme::contact-form.form class="mt-10 lg:max-w-screen-sm lg:pr-[10%] rtl:lg:pr-0 rtl:lg:pl-[10%]" formType="support" />
                 </div>
                 <div class="col-span-full lg:col-auto bg-primary-50 lg:absolute lg:w-1/2 lg:h-full lg:top-0 lg:bottom-0 lg:!right-0 rtl:lg:!right-auto rtl:lg:!left-0 hidden lg:block">

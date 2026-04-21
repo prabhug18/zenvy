@@ -32,12 +32,9 @@
         <div class="flex justify-between mt-6">
             <div class="shrink-0 grow">
                 <h6 class="area-title text-xl !leading-none font-bold group-hover/instructor:text-primary custom-transition">
-                    <a href="{{ route('users.detail', $instructor->id) }}" class="flex items-center justify-between"
-                        aria-label="Instructor full name">
+                    <div class="flex items-center justify-between">
                         {{ $name ?? $user?->first_name . ' ' . $user?->last_name }}
-                        <i class="ri-arrow-right-line text-[20px] rtl:before:content-['\ea60']"></i>
-                        <span class="absolute inset-0" aria-hidden="true"></span>
-                    </a>
+                    </div>
                 </h6>
                 <p class="area-description !leading-none mt-1.5">
                     {{ $designationData['title'] ?? ($user?->designation?->title ?? '') }}

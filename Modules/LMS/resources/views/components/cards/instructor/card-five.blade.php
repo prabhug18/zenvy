@@ -36,9 +36,9 @@
         <div class="flex flex-col text-center mt-6">
             <h6
                 class="area-title text-xl !leading-none font-bold group-hover/instructor:text-primary custom-transition">
-                <a href="{{ route('users.detail', $instructor->id) }}" aria-label="Instructor profile link">
+                <span>
                     {{ $name ?? $user?->first_name . ' ' . $user?->last_name }}
-                </a>
+                </span>
             </h6>
             <div class="area-description !leading-none mt-2">
                 {{ $designationTranslate['title'] ?? ($user?->designation?->title ?? '') }}

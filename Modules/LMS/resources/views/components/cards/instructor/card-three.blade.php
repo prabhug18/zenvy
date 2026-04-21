@@ -17,19 +17,17 @@
     <div
         class="flex flex-col sm:flex-row items-center gap-7 p-7 h-full border border-heading/15 rounded-lg hover:border-transparent hover:shadow-lg custom-transition">
         <div class="aspect-[1/1.17] max-w-60 rounded-xl overflow-hidden shrink-0">
-            <a href="{{ route('users.detail', $instructor->id) }}" aria-label="Instructor profile image">
-                <img data-src="{{ $thumbnail }}" alt="Instructor profile image" class="size-full object-cover">
-            </a>
+            <img data-src="{{ $thumbnail }}" alt="Instructor profile image" class="size-full object-cover">
         </div>
         <div class="grow">
             <div class="area-description line-clamp-4">
                 {!! $userTranslations['about'] ?? ($instructor?->userable?->about ?? '') !!}
             </div>
             <h6 class="text-primary text-xl font-bold mt-6">
-                <a href="{{ route('users.detail', $instructor->id) }}" aria-label="Instructor full name">
+                <span>
                     {{ $userTranslations['first_name'] ?? $instructor->userable?->first_name }}
                     {{ $userTranslations['last_name'] ?? $instructor->userable?->last_name }}
-                </a>
+                </span>
             </h6>
             <div class="text-heading/70">
                 {{ $designationTranslate['title'] ?? ($instructor?->userable?->designation?->title ?? '') }}
