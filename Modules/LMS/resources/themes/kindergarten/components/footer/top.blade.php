@@ -25,9 +25,18 @@
             </div>
             <div class="grow">
                 <h6 class="text-white text-base font-semibold leading-none">{{ translate('Phone') }}</h6>
-                <div class="text-white/80 text-sm mt-2">
-                    <a href="tel:+{{ $general['phone'] ?? '' }}"
-                        aria-label="Company phone" class="text-white/80 hover:text-white transition-colors">{{ $general['phone'] ?? 'no data found' }}</a>
+                <div class="text-white/80 text-sm mt-2 flex flex-col gap-1">
+                    @if($general['phone'] ?? '')
+                        <a href="tel:+{{ $general['phone'] }}"
+                            aria-label="Company phone" class="text-white/80 hover:text-white transition-colors">{{ $general['phone'] }}</a>
+                    @endif
+                    @if($general['second_phone'] ?? '')
+                        <a href="tel:+{{ $general['second_phone'] }}"
+                            aria-label="Company second phone" class="text-white/80 hover:text-white transition-colors">{{ $general['second_phone'] }}</a>
+                    @endif
+                    @if(!($general['phone'] ?? '') && !($general['second_phone'] ?? ''))
+                        {{ translate('no data found') }}
+                    @endif
                 </div>
             </div>
         </div>
