@@ -11,12 +11,16 @@
     $customScript = get_theme_option('custom_script') ?? [];
     $customCss = $customScript['custom_css'] ?? '';
     $customJs = $customScript['custom_js'] ?? '';
+    $headerScript = $customScript['header_script'] ?? '';
 @endphp
 
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() ?? app('default_language') }}" class="group" dir="{{ active_rtl() }}">
 
 <head>
+    @if ($headerScript)
+        {!! $headerScript !!}
+    @endif
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{{ $backendSetting['app_name'] ?? translate('Edulab LMS') }}</title>

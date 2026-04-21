@@ -496,6 +496,10 @@
                     action="{{ route('theme.setting') }}" data-key="custom_script">
                     @csrf
                     <div class="leading-none">
+                        <label class="form-label"> {{ translate('Header Script (Analytics, etc.)') }} </label>
+                        <textarea name="header_script" class="editorContainer">{!! $script['header_script'] ?? '' !!}</textarea>
+                    </div>
+                    <div class="leading-none mt-6">
                         <label class="form-label"> {{ translate('Custom CSS') }} </label>
                         <textarea name="custom_css" class="editorContainer">{!! $script['custom_css'] ?? '' !!}</textarea>
                     </div>
