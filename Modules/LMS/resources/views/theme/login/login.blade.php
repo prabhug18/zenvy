@@ -23,16 +23,16 @@
 
             <div class="dashkit-tab flex-center gap-2 flex-wrap mt-10" id="userRegisterTab">
                 <button type="button" aria-label="Login tab for Student"
-                    class="dashkit-tab-btn btn b-light btn-primary-light btn-lg h-11 !rounded-full text-[14px] sm:text-[16px] md:text-[18px] [&.active]:bg-primary [&.active]:text-white  login-credentials"
-                    id="asStudent" data-email="student@gmail.com" data-password="123456">Student</button>
+                    class="dashkit-tab-btn btn b-light btn-primary-light btn-lg h-11 !rounded-full text-[14px] sm:text-[16px] md:text-[18px] [&.active]:bg-primary [&.active]:text-white active login-credentials"
+                    id="asStudent">Student</button>
                 <button type="button" aria-label="Login tab for Instructor"
                     class="dashkit-tab-btn btn b-light btn-primary-light btn-lg h-11 !rounded-full text-[14px] sm:text-[16px] md:text-[18px] [&.active]:bg-primary [&.active]:text-white  login-credentials"
-                    id="asInstructor" data-email="instructor@gmail.com" data-password="123456">Instructor</button>
+                    id="asInstructor">Instructor</button>
                 <!-- <button type="button" aria-label="Login tab for Organization"
                     class="dashkit-tab-btn btn b-light btn-primary-light btn-lg h-11 !rounded-full text-[14px] sm:text-[16px] md:text-[18px] [&.active]:bg-primary [&.active]:text-white  login-credentials"
                     id="asOrganization" data-email="organization@gmail.com" data-password="123456">Organization</button> -->
                 <button type="button" aria-label="Login tab for Admin"
-                    class="dashkit-tab-btn btn b-light btn-primary-light btn-lg h-11 !rounded-full text-[14px] sm:text-[16px] md:text-[18px] [&.active]:bg-primary [&.active]:text-white  active login-credentials"
+                    class="dashkit-tab-btn btn b-light btn-primary-light btn-lg h-11 !rounded-full text-[14px] sm:text-[16px] md:text-[18px] [&.active]:bg-primary [&.active]:text-white login-credentials"
                     id="admin">Admin</button>
 
             </div>
@@ -40,7 +40,7 @@
             <div class="dashkit-tab-content  w-full max-w-screen-sm *:hidden" id="userRegisterTabContent">
                 <!-- JOIN AS INSTRUCTOR -->
 
-                <div class="dashkit-tab-pane" data-tab="asStudent">
+                <div class="dashkit-tab-pane !block" data-tab="asStudent">
                     <x-theme::form.login-form />
                 </div>
                 <div class="dashkit-tab-pane" data-tab="asInstructor">
@@ -51,14 +51,14 @@
                     <x-theme::form.login-form />
                 </div>
                 <!-- JOIN AS STUDENT -->
-                <div class="dashkit-tab-pane !block" data-tab="admin">
+                <div class="dashkit-tab-pane" data-tab="admin">
                     <form action="{{ route('admin.login') }}" class="w-full max-w-screen-sm mt-10 form" method="POST">
                         @csrf
                         <div class="grid grid-cols-2 gap-x-3 gap-y-5">
                             <div class="col-span-full">
                                 <div class="relative">
                                     <input type="email" name="email" id="admin-email" class="form-input rounded-full peer"
-                                        value="admin@gmail.com"  placeholder=""/>
+                                        value=""  placeholder=""/>
                                     <label for="admin-email" class="form-label floating-form-label">Email <span
                                             class="text-danger">*</span></label>
                                 </div>
@@ -67,7 +67,7 @@
                             <div class="col-span-full">
                                 <div class="relative">
                                     <input type="password" name="password" id="admin-password" class="form-input rounded-full peer"
-                                        placeholder="" value="123456" />
+                                        placeholder="" value="" />
                                     <label for="admin-password" class="form-label floating-form-label">Password <span
                                             class="text-danger">*</span></label>
                                     <!-- type toggler -->

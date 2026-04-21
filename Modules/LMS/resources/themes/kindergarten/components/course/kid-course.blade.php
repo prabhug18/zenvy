@@ -31,6 +31,13 @@
             <div class="flex-center mt-10 lg:mt-[60px]">
                 <div class="child-course-pagination swiper-custom-pagination"></div>
             </div>
+
+            <!-- VIEW ALL COURSES BUTTON -->
+            <div class="flex-center mt-12">
+                <a href="{{ route('course.list') }}" class="btn b-solid btn-primary-solid btn-lg !px-10 !rounded-full !text-lg font-bold">
+                    {{ translate('View All Courses') }}
+                </a>
+            </div>
         @endif
     </div>
     <!-- POSITIONAL ELEMENT -->

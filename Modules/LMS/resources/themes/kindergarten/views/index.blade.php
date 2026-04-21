@@ -84,6 +84,14 @@
     <x-kindergarten:theme::about.about />
     <!-- END ABOUT US AREA -->
 
+    <!-- START PROMO BANNER AREA -->
+    <div class="pt-16 sm:pt-24 lg:pt-[120px]">
+        <div class="container relative">
+            <img data-src="{{ asset('lms/frontend/assets/images/banner/image.png') }}" alt="promo banner" class="w-full rounded-xl">
+        </div>
+    </div>
+    <!-- END PROMO BANNER AREA -->
+
     <!-- START KIDS COURSE AREA -->
     <x-kindergarten:theme::course.kid-course :courses="$data['courses']" :course-categories="$data['course_categories']" />
     <!-- END KIDS COURSE AREA -->

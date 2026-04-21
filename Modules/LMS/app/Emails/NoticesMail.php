@@ -23,6 +23,6 @@ class NoticesMail extends Mailable implements ShouldQueue
     public function build(): self
     {
 
-        return $this->subject($this->notices['title'])->view('portal::mail.notices', ['data' => $this->notices]);
+        return $this->subject($this->notices['title'])->view('lms::mail.notices', ['data' => $this->notices]);
     }
 }

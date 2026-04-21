@@ -4,7 +4,7 @@
             <div class="col-span-full lg:col-span-7">
                 <div class="bg-gradient-to-b from-[#FEFBF0] to-[#E6F3EB] px-5 py-8 xl:p-20 h-full">
                     <h2 class="area-title">
-                        {{ translate('Free Consultation') }}
+                        {{ translate('Enquire Us') }}
                     </h2>
                     <div class="area-description mt-3 mb-8">
                         {{ translate('Have questions? Fill in the form below and our team will get back to you shortly.') }}
@@ -80,7 +80,7 @@
                         }
                     </style>
 
-                    <form action="{{ route('contact.store') }}" method="POST" class="consultation-form">
+                    <form action="{{ route('contact.store') }}" method="POST" class="consultation-form form">
                         @csrf
                         <div class="form-row">
                             <div class="form-field">

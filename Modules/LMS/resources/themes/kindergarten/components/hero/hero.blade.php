@@ -49,7 +49,7 @@
                                             {{ $description }}</p>
                                     @endif
                                     @if (!empty($button))
-                                        <a href="{{ $button['link'] ?? '#' }}" aria-label="Hero call to action"
+                                        <a href="{{ (!empty($button['link']) && $button['link'] !== '#') ? $button['link'] : route('course.list') }}" aria-label="Hero call to action"
                                             class="btn b-solid btn-primary-solid btn-lg !rounded-full !text-[16px] !px-6 font-medium mt-8">
                                             {{ $buttonTranslations['name'] ?? ($button['name'] ?? '') }}
                                         </a>
