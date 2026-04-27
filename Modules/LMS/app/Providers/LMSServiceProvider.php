@@ -298,20 +298,17 @@ class LMSServiceProvider extends ServiceProvider
     {
 
         $mail = get_theme_option('mail_setting') ?? null;
-        $config = array(
-            'driver'     => $mail['mail_driver'] ?? null,
-            'host'       => $mail['mail_host'] ?? null,
-            'port'       => $mail['mail_port'] ?? null,
-            'from'       => [
-                'address' =>  $mail['mail_from_address'] ?? null,
-                'name' => $mail['mail_from_name'] ?? null,
-            ],
-            'encryption' =>  $mail['mail_encryption'] ?? null,
-            'username'   =>   $mail['mail_username'] ?? null,
-            'password'   =>   $mail['password'] ?? null,
-            'sendmail'   =>  '/usr/sbin/sendmail -bs',
-            'pretend'    =>  false,
-        );
+        if ($mail) {
+            config()->set('mail.default', $mail['mail_driver'] ?? 'smtp');
+            config()->set('mail.mailers.smtp.host', $mail['mail_host'] ?? null);
+            config()->set('mail.mailers.smtp.port', $mail['mail_port'] ?? null);
+            config()->set('mail.mailers.smtp.encryption', $mail['mail_encryption'] ?? null);
+            config()->set('mail.mailers.smtp.username', $mail['mail_username'] ?? null);
+            config()->set('mail.mailers.smtp.password', $mail['password'] ?? null);
+            config()->set('mail.from.address', $mail['mail_from_address'] ?? null);
+            config()->set('mail.from.name', $mail['mail_from_name'] ?? null);
+        }
+
         $backendSetting =  get_theme_option('backend_general') ?? null;
 
         if ($backendSetting) {
@@ -325,8 +322,6 @@ class LMSServiceProvider extends ServiceProvider
 
         $cookieEnabled == 'on' ? config()->set('lms.cookie_enabled', true)
             : config()->set('lms.cookie_enabled', false);
-
-        config()->set('mail', $config);
 
 
         if (App::environment('local')) {
