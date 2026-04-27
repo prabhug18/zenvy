@@ -127,6 +127,10 @@ class AdminController extends Controller
 
     public function notFound()
     {
-        return view('theme::404');
+        try {
+            return view('theme::404');
+        } catch (\InvalidArgumentException $e) {
+            abort(404);
+        }
     }
 }

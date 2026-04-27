@@ -54,7 +54,7 @@ class ContactRepository extends BaseRepository
             try {
                 $adminEmail = app()->isLocal() 
                     ? 'prabhu.ctrlnext@gmail.com' 
-                    : 'zenvycoaching@gmail.com';
+                    : 'prabhug.09@gmail.com';
                 
                 $mailData = [
                     'title' => 'New Inquiry Received: ' . ($data['subject'] ?? 'No Subject'),
