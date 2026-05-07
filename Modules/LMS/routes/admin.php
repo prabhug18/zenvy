@@ -45,6 +45,7 @@ use Modules\LMS\Http\Controllers\Admin\Instructor\InstructorController;
 use Modules\LMS\Http\Controllers\Admin\Localization\TimeZoneController;
 use Modules\LMS\Http\Controllers\Admin\Certificate\CertificateController;
 use Modules\LMS\Http\Controllers\Admin\Testimonial\TestimonialController;
+use Modules\LMS\Http\Controllers\Admin\HomepageVideo\HomepageVideoController;
 use Modules\LMS\Http\Controllers\Admin\Courses\Quizzes\QuestionController;
 use Modules\LMS\Http\Controllers\Admin\Courses\Quizzes\QuizTypeController;
 use Modules\LMS\Http\Controllers\Admin\Noticeboard\NoticesBoardController;
@@ -254,6 +255,12 @@ Route::group(
         Route::get('testimonial/{id}/translate/{locale}', [TestimonialController::class, 'edit'])->name('testimonial.translate');
         Route::put('testimonial/restore/{id}', [TestimonialController::class, 'restore'])->name('testimonial.restore');
         Route::get('testimonial/status-change/{id}', [TestimonialController::class, 'statusChange'])->name('testimonial.status');
+
+        /** homepage video **/
+        Route::resource('homepage-video', HomepageVideoController::class);
+        Route::get('homepage-video/{id}/translate/{locale}', [HomepageVideoController::class, 'edit'])->name('homepage-video.translate');
+        Route::put('homepage-video/restore/{id}', [HomepageVideoController::class, 'restore'])->name('homepage-video.restore');
+        Route::get('homepage-video/status-change/{id}', [HomepageVideoController::class, 'statusChange'])->name('homepage-video.status');
 
         /** email Template **/
         Route::resource('email-template', EmailTemplateController::class)->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);

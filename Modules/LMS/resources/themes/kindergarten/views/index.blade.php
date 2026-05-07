@@ -92,6 +92,10 @@
     </div>
     <!-- END PROMO BANNER AREA -->
 
+    <!-- START VIDEO AREA -->
+    <x-kindergarten:theme::video.video :videos="$data['videos']" />
+    <!-- END VIDEO AREA -->
+
     <!-- START KIDS COURSE AREA -->
     <x-kindergarten:theme::course.kid-course :courses="$data['courses']" :course-categories="$data['course_categories']" />
     <!-- END KIDS COURSE AREA -->

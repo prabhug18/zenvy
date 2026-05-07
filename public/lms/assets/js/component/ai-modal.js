@@ -13,6 +13,7 @@ class DraggableModal {
     }
 
     init() {
+        if (!this.modal || !this.dragger) return;
         this.restoreVisibility();
         this.restorePosition();
         this.addEventListeners();
@@ -154,6 +155,7 @@ class VerticalDraggable {
     }
 
     init() {
+        if (!this.element || !this.dragger) return;
         this.enableVerticalDragging();
     }
 

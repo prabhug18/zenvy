@@ -248,6 +248,32 @@ class PermissionSeeder extends Seeder
                 'guard_name' => 'admin',
                 'module' => 'emailtemplate',
             ],
+
+            [
+                'name' => 'menu.homepage-video',
+                'guard_name' => 'admin',
+                'module' => 'homepage-video',
+            ],
+            [
+                'name' => 'add.homepage-video',
+                'guard_name' => 'admin',
+                'module' => 'homepage-video',
+            ],
+            [
+                'name' => 'edit.homepage-video',
+                'guard_name' => 'admin',
+                'module' => 'homepage-video',
+            ],
+            [
+                'name' => 'delete.homepage-video',
+                'guard_name' => 'admin',
+                'module' => 'homepage-video',
+            ],
+            [
+                'name' => 'status.homepage-video',
+                'guard_name' => 'admin',
+                'module' => 'homepage-video',
+            ],
             [
                 'name' => 'menu.icon',
                 'guard_name' => 'admin',

@@ -41,6 +41,7 @@ class HomeController extends Controller
             case 'digital-education':
                 $sections = [
                     'categories',
+                    'videos',
                     'courses',
                     'bundles',
                     'course_categories',
@@ -53,6 +54,7 @@ class HomeController extends Controller
             case 'elearning-education':
                 $sections = [
                     'categories',
+                    'videos',
                     'courses',
                     'bundles',
                     'testimonials',
@@ -65,6 +67,7 @@ class HomeController extends Controller
                 break;
             case 'kindergarten':
                 $sections = [
+                    'videos',
                     'courses',
                     'bundles',
                     'course_categories',
@@ -79,6 +82,7 @@ class HomeController extends Controller
             case 'lms-education':
                 $sections = [
                     'categories',
+                    'videos',
                     'courses',
                     'bundles',
                     'testimonials',
@@ -92,6 +96,7 @@ class HomeController extends Controller
             default:
                 $sections = [
                     'categories',
+                    'videos',
                     'courses',
                     'bundles',
                     'upcoming_courses',

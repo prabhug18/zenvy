@@ -13,6 +13,7 @@ use Modules\LMS\Repositories\Courses\CourseRepository;
 use Modules\LMS\Repositories\Category\CategoryRepository;
 use Modules\LMS\Repositories\Courses\Bundle\BundleRepository;
 use Modules\LMS\Repositories\Testimonial\TestimonialRepository;
+use Modules\LMS\Repositories\HomepageVideo\HomepageVideoRepository;
 
 class HomeRepository extends BaseRepository
 {
@@ -35,7 +36,8 @@ class HomeRepository extends BaseRepository
             'instructors' => [],
             'organizations' => [],
             'blogs' => [],
-            'subscriptions' => []
+            'subscriptions' => [],
+            'videos' => []
         ];
         // Category.
         if (in_array('categories', $sections)) {
@@ -199,6 +201,25 @@ class HomeRepository extends BaseRepository
                 if (in_array('subscriptions', $sections)) {
                     $data['subscriptions'] = SubscriptionService::getSubscription();
                 }
+            }
+        }
+
+        // Videos.
+        if (in_array('videos', $sections)) {
+            $videoResponse = HomepageVideoRepository::get(
+                options: [
+                    'where' => ['status', 1],
+                    'orderBy' => ['order', 'asc'],
+                ],
+                relations: [
+                    'translations' => function ($query) {
+                        $query->where('locale', app()->getLocale());
+                    }
+                ]
+            );
+
+            if ($videoResponse['status'] === 'success') {
+                $data['videos'] = $videoResponse['data'] ?? [];
             }
         }
 
