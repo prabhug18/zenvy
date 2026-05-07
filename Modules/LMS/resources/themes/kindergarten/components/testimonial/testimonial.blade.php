@@ -45,11 +45,12 @@
                                         class="size-full object-cover">
                                 </div>
 
-                                <!-- Stars Rating (Left Aligned & Forced Yellow) -->
-                                <div
-                                    class="flex items-center gap-1 mt-2 mb-5 [&_i]:!text-[#FDB022] [&_.ri-star-fill]:!text-[#FDB022]">
-                                    {!! show_rating($translations['rating'] ?? ($testimonial->rating ?? 5)) !!}
-                                </div>
+                                <!-- Designation (Top Aligned) -->
+                                @if(!empty($testimonial->designation))
+                                    <p class="area-description !leading-none mt-2 mb-5 text-sm font-bold text-heading/80 uppercase tracking-wider">
+                                        {{ $translations['designation'] ?? ($testimonial->designation ?? '') }}
+                                    </p>
+                                @endif
 
                                 <!-- Comments (Left Aligned) -->
                                 <div class="area-description italic text-heading leading-[1.8] text-base mb-8 flex-grow">
@@ -63,11 +64,6 @@
                                         <h6 class="area-title text-xl font-bold !leading-none text-heading">
                                             {{ $translations['name'] ?? ($testimonial->name ?? '') }}
                                         </h6>
-                                        @if(!empty($testimonial->designation))
-                                            <p class="area-description !leading-none mt-2 text-sm text-heading/70">
-                                                {{ $translations['designation'] ?? ($testimonial->designation ?? '') }}
-                                            </p>
-                                        @endif
                                     </div>
 
                                     <!-- Quote Icon (Bottom Right) -->
