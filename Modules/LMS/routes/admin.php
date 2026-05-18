@@ -290,6 +290,7 @@ Route::group(
                 Route::get('enrolled/edit/{id}', 'edit')->name('edit');
                 Route::get('enrolled/show/{id}', 'show')->name('show');
                 Route::get('enrolled/status/{id}', 'status')->name('status');
+                Route::post('enrolled/update-permissions/{id}', 'updatePermissions')->name('update.permissions');
                 Route::delete('enrolled/destroy/{id}', 'destroy')->name('destroy');
             }
         );

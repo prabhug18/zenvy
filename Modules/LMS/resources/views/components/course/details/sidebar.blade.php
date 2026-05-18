@@ -174,7 +174,7 @@
             </tbody>
         </table>
 
-        @if ($purchaseCheck !== true)
+        @if ($purchaseCheck === false)
             @if (is_free($course->id, 'course'))
                 <form action="{{ route('course.enrolled') }}" class="form" method="POST">
                     @csrf

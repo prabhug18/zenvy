@@ -82,21 +82,29 @@
                                         </a>
 
                                         @if ($userQuiz?->quiz?->pass_mark <= $userQuiz->score)
-                                            @php
-                                                $userCertificate = Modules\LMS\Models\Certificate\UserCertificate::where('quiz_id', $userQuiz->id)->where('user_id', authCheck()->id)->first();
-                                            @endphp
-                                            @if ($userCertificate)
-                                                <a href="{{ route('student.certificate.download', $userCertificate->id) }}"
-                                                    class="btn b-solid btn-success-solid btn-sm" target="_blank"
-                                                    title="{{ translate('Download Certificate') }}">
-                                                    {{ translate('Download') }}
-                                                </a>
+                                            @if ($userQuiz?->course?->courseSetting?->is_certificate)
+                                                @php
+                                                    $userCertificate = Modules\LMS\Models\Certificate\UserCertificate::where('quiz_id', $userQuiz->id)
+                                                        ->where('user_id', authCheck()->id)
+                                                        ->first();
+                                                @endphp
+                                                @if ($userCertificate)
+                                                    <a href="{{ route('student.certificate.download', $userCertificate->id) }}"
+                                                        class="btn b-solid btn-success-solid btn-sm" target="_blank"
+                                                        title="{{ translate('Download Certificate') }}">
+                                                        {{ translate('Download') }}
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('student.generate.certificate', $userQuiz->id) }}"
+                                                        class="btn b-solid btn-primary-solid btn-sm"
+                                                        title="{{ translate('Get Certificate') }}">
+                                                        {{ translate('Get Certificate') }}
+                                                    </a>
+                                                @endif
                                             @else
-                                                <a href="{{ route('student.generate.certificate', $userQuiz->id) }}"
-                                                    class="btn b-solid btn-primary-solid btn-sm"
-                                                    title="{{ translate('Get Certificate') }}">
-                                                    {{ translate('Get Certificate') }}
-                                                </a>
+                                                <span class="text-xs text-gray-500 italic">
+                                                    {{ translate('No Certificate') }}
+                                                </span>
                                             @endif
                                         @endif
                                     </div>

@@ -1,5 +1,15 @@
 @php
     $sideBarShow = $sideBarShow ?? null;
+    // Fetch current student's enrollment permissions for this course
+    $enrollmentPermissions = null;
+    $authCheck = authCheck();
+    if ($authCheck && isset($purchaseCheck) && $purchaseCheck !== false) {
+        $enrollmentRecord = \Modules\LMS\Models\Purchase\PurchaseDetails::where([
+            'user_id' => $authCheck->id,
+            'course_id' => $course->id,
+        ])->whereNotNull('topic_permissions')->latest()->first();
+        $enrollmentPermissions = $enrollmentRecord?->topic_permissions;
+    }
 @endphp
 
 @foreach ($course->chapters as $key => $chapter)
@@ -27,16 +37,18 @@
                     $topic = $chapterTopic?->topicable ?? null;
                 @endphp
                 @if ($topic?->topic_type?->slug == 'video')
+                    @php $topicAllowed = $enrollmentPermissions ? ($enrollmentPermissions['video'] ?? true) : true; @endphp
                     <x-theme::course.curriculum-item.item :start_topic_id="$start_topic_id" :chapter_id="$chapterId" :topic="$topic"
                         :course="$course" icon='<i class="ri-file-video-line text-sm"></i>'
                         sideBarShow="{{ $sideBarShow }}" :key="$key" :auth="$auth ?? false"
-                        :purchaseCheck=$purchaseCheck />
+                        :purchaseCheck="$purchaseCheck" :videoLocked="$purchaseCheck === false || !$topicAllowed" />
                 @endif
 
                 @if ($topic?->topic_type?->slug == 'reading')
+                    @php $topicAllowed = $enrollmentPermissions ? ($enrollmentPermissions['reading'] ?? true) : true; @endphp
                     <x-theme::course.curriculum-item.item :start_topic_id="$start_topic_id" :chapter_id="$chapterId" :topic="$topic"
                         :course="$course" icon='' sideBarShow="{{ $sideBarShow }}" :key="$key"
-                        :auth="$auth ?? false" :purchaseCheck=$purchaseCheck />
+                        :auth="$auth ?? false" :purchaseCheck="$topicAllowed ? $purchaseCheck : false" />
                 @endif
 
                 @if ($topic?->topic_type?->slug == 'supplement')
@@ -47,16 +59,18 @@
                 @endif
 
                 @if ($topic?->topic_type?->slug == 'assignment')
+                    @php $topicAllowed = $enrollmentPermissions ? ($enrollmentPermissions['assignment'] ?? true) : true; @endphp
                     <x-theme::course.curriculum-item.item :start_topic_id="$start_topic_id" :chapter_id="$chapterId" :topic="$topic"
                         :course="$course" icon='<i class="ri-a-b text-sm "></i>' sideBarShow="{{ $sideBarShow }}"
-                        :key="$key" :auth="$auth ?? false" :purchaseCheck=$purchaseCheck />
+                        :key="$key" :auth="$auth ?? false" :purchaseCheck="$topicAllowed ? $purchaseCheck : false" />
                 @endif
 
                 @if ($topic?->topic_type?->slug == 'quiz')
+                    @php $topicAllowed = $enrollmentPermissions ? ($enrollmentPermissions['quiz'] ?? true) : true; @endphp
                     <x-theme::course.curriculum-item.item :start_topic_id="$start_topic_id" :chapter_id="$chapterId" :topic="$topic"
                         :course="$course" icon='<i class="ri-questionnaire-line text-sm"></i>'
                         sideBarShow="{{ $sideBarShow }}" :key="$key" :auth="$auth ?? false"
-                        :purchaseCheck=$purchaseCheck />
+                        :purchaseCheck="$topicAllowed ? $purchaseCheck : false" />
                 @endif
             @endforeach
         </div>

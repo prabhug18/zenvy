@@ -82,4 +82,20 @@ class EnrollmentController extends Controller
         $response = $this->purchase->statusChange($id);
         return response()->json($response);
     }
+    /**
+     * Update the topic permissions for an enrollment.
+     *
+     * @param int $id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updatePermissions($id, Request $request)
+    {
+        if (!has_permissions($request->user(), ['edit.enrollment'])) {
+            return json_error('You have no permission.');
+        }
+
+        $response = $this->purchase->updatePermissions($id, $request);
+        return response()->json($response);
+    }
 }

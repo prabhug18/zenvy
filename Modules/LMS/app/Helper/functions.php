@@ -1197,7 +1197,12 @@ if (!function_exists('bundle_course_check')) {
     function bundle_course_check($courseId)
     {
 
-        $bundles = PurchaseDetails::select('bundle_id')->where(['user_id' => authCheck()->id, 'purchase_type' => PurchaseType::BUNDLE])->pluck('bundle_id')->toArray();
+        $bundles = PurchaseDetails::select('bundle_id')
+            ->where([
+                'user_id' => authCheck()->id,
+                'purchase_type' => PurchaseType::BUNDLE,
+                'status' => \Modules\LMS\Enums\PurchaseStatus::COMPLETED
+            ])->pluck('bundle_id')->toArray();
         $status = false;
         if (!is_array($bundles)) {
             return  $status;
@@ -1220,15 +1225,22 @@ if (!function_exists('purchaseCheck')) {
      * @param string|null $type The type of item ('course' or 'bundle').
      * @return bool True if the purchase exists, otherwise false.
      */
-    function purchaseCheck($id = null, $type = null): bool
+    function purchaseCheck($id = null, $type = null): string|false
     {
         $user = authCheck();
         // Check if user is authenticated and both ID and type are provided.
         if ($user && isset($id, $type)) {
+            if (bundle_course_check($id)) {
+                return 'purchase';
+            }
+
             $options = $type === 'course' ? ['course_id' => $id] : ['bundle_id' => $id];
-            // Check for existing purchase details for the authenticated user.
-            if (bundle_course_check($id) ||  PurchaseDetails::where($options)->where('user_id',  $user->id)->exists()) {
-                return true;
+            $record = PurchaseDetails::where($options)
+                ->where('user_id', $user->id)
+                ->where('status', \Modules\LMS\Enums\PurchaseStatus::COMPLETED)
+                ->first();
+            if ($record) {
+                return $record->type;
             }
         }
 
@@ -2352,5 +2364,56 @@ if(!function_exists('is_subscription_feature_enabled')) {
     function is_subscription_feature_enabled()
     {
         return Module::all();
+    }
+}
+
+if (!function_exists('format_embed_url')) {
+    /**
+     * Format YouTube/Vimeo URLs into their proper embed URLs.
+     *
+     * @param string $url
+     * @return string
+     */
+    function format_embed_url($url)
+    {
+        if (empty($url)) {
+            return $url;
+        }
+
+        // Handle YouTube
+        if (preg_match('/(youtube\.com|youtu\.be|youtube-nocookie\.com)/i', $url)) {
+            if (str_contains($url, '/embed/')) {
+                return $url;
+            }
+
+            $videoId = '';
+            if (preg_match('/youtu\.be\/([a-zA-Z0-9_-]+)/i', $url, $matches)) {
+                $videoId = $matches[1];
+            } elseif (preg_match('/\/shorts\/([a-zA-Z0-9_-]+)/i', $url, $matches)) {
+                $videoId = $matches[1];
+            } elseif (preg_match('/[\\?&]v=([^&#]*)/i', $url, $matches)) {
+                $videoId = $matches[1];
+            } elseif (preg_match('/\/embed\/([a-zA-Z0-9_-]+)/i', $url, $matches)) {
+                $videoId = $matches[1];
+            }
+
+            if (!empty($videoId)) {
+                return 'https://www.youtube.com/embed/' . $videoId;
+            }
+        }
+
+        // Handle Vimeo
+        if (preg_match('/vimeo\.com/i', $url)) {
+            if (str_contains($url, 'player.vimeo.com/video/')) {
+                return $url;
+            }
+
+            if (preg_match('/vimeo\.com\/([0-9]+)/i', $url, $matches)) {
+                $videoId = $matches[1];
+                return 'https://player.vimeo.com/video/' . $videoId;
+            }
+        }
+
+        return $url;
     }
 }

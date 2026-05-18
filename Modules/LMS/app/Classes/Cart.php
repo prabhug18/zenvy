@@ -34,7 +34,7 @@ class Cart
         $cart = self::get();
         $searchItem = self::checkCartExist($courseId);
         if ($searchItem !== false) {
-            array_splice($cart['courses'],  Cart::cartQty() == 1 ? 0 : $searchItem, 1);
+            array_splice($cart['courses'], $searchItem, 1);
             self::set($cart);
             return true;
         }
@@ -124,18 +124,22 @@ class Cart
      * checkCartExist
      *
      * @param int $id
+     * @param string|null $type
      *
      */
-    public static function checkCartExist($id)
+    public static function checkCartExist($id, $type = null)
     {
         $cart = self::get();
-        if (empty($cart)) {
+        if (empty($cart) || empty($cart['courses'])) {
             return false;
         }
-        $columCheck = array_column($cart['courses'], 'id');
-        if ($searchItem = array_search($id, $columCheck) !== false) {
-            return $searchItem;
+        
+        foreach ($cart['courses'] as $index => $item) {
+            if ($item['id'] == $id && ($type === null || $item['type'] == $type)) {
+                return $index;
+            }
         }
+        return false;
     }
 
     /**

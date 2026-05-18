@@ -17,6 +17,6 @@
 @else
     <!-- VIMEO/YOUTUBE -->
     <div class="plyr__video-embed" id="course-demo">
-        <iframe src="{{ $course->demo_url }}" allowfullscreen allowtransparency allow="autoplay"></iframe>
+        <iframe src="{{ format_embed_url($course->demo_url) }}" allowfullscreen allowtransparency allow="autoplay"></iframe>
     </div>
 @endif

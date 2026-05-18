@@ -66,9 +66,15 @@ class CheckoutController extends Controller
         $result = '';
         if ($request->payment_method == "razorpay") {
             $result =  RazorpayService::makePayment();
+            if (is_array($result) && isset($result['status']) && $result['status'] === 'error') {
+                return response()->json($result);
+            }
         }
         if ($request->payment_method == "paypal") {
             $result = PaypalService::makePayment();
+            if (is_array($result) && isset($result['status']) && $result['status'] === 'error') {
+                return response()->json($result);
+            }
         }
         $data = [
             'button' => view('theme::payment.button', compact('paymentMethod', 'result'))->render(),
@@ -80,24 +86,33 @@ class CheckoutController extends Controller
         ]);
     }
 
-    /**
-     *  courseEnrolled
-     */
     public function courseEnrolled(Request $request)
     {
         if (!authCheck()) {
+            if ($request->ajax()) {
+                return response()->json(['status' => 'error', 'message' => translate('Please Login')]);
+            }
             toastr()->error(translate('Please Login'));
             return redirect()->back();
         }
         $response = $this->enrolled->courseEnrolled($request);
         if ($response['status'] !== "success") {
-            return response()->json($response);
+            if ($request->ajax()) {
+                return response()->json($response);
+            }
+            toastr()->error($response['message'] ?? translate('Enrollment failed'));
+            return redirect()->back();
         }
+        
         toastr()->success(translate('Thank you for Enrolling'));
+        
+        $redirectUrl = route('student.enroll.index');
+        
         if ($request->ajax()) {
-            return response()->json(['status' => $response['status'],  'type' => true]);
+            return response()->json(['status' => $response['status'], 'url' => $redirectUrl]);
         }
-        return redirect()->back();
+        
+        return redirect($redirectUrl);
     }
 
 

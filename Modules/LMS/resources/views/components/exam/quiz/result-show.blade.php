@@ -1,4 +1,4 @@
-@if (!empty($questionScore) && $questionScore['status'] == 1)
+@if (!empty($questionScore) && $questionScore['status'])
     <!-- STATUS -->
     <div class="aleart a-outline aleart-success-outline mt-4">
         <div class="flex items-center gap-2.5">

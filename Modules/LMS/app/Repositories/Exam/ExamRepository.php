@@ -3,6 +3,8 @@
 namespace Modules\LMS\Repositories\Exam;
 
 use Modules\LMS\Models\Auth\UserCourseExam;
+use Modules\LMS\Models\QuestionScore;
+use Modules\LMS\Models\TakeAnswer;
 use Modules\LMS\Repositories\BaseRepository;
 use Modules\LMS\Repositories\Courses\Topics\Assignment\AssignmentRepository;
 use Modules\LMS\Repositories\Courses\Topics\Quizzes\QuizRepository;
@@ -120,8 +122,16 @@ class ExamRepository extends BaseRepository
                 if (isset($request->status) && $request->status == 'start') {
                     static::$model::updateOrCreate(['quiz_id' => $id, 'user_id' => authCheck()->id], [
                         'course_id' => $courseId,
-                        'quiz_id' => $id
+                        'quiz_id'   => $id
                     ]);
+                }
+                // On fresh start or retry: wipe stale answers and scores for this user+quiz
+                if (isset($request->status) && in_array($request->status, ['start', 'try'])) {
+                    $userExamRecord = static::$model::where(['quiz_id' => $id, 'user_id' => authCheck()->id])->first();
+                    if ($userExamRecord) {
+                        TakeAnswer::where('user_course_exam_id', $userExamRecord->id)->delete();
+                        QuestionScore::where(['quiz_id' => $id, 'user_id' => authCheck()->id])->delete();
+                    }
                 }
                 return self::handleQuiz($id, $request, $courseId, $userId);
 
@@ -171,24 +181,28 @@ class ExamRepository extends BaseRepository
 
         if (!$quiz || !isset($quiz->questions)) {
             return [
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => translate('Quiz not found or invalid')
             ];
         }
 
-
         $questions = array_chunk($quiz->questions->toArray(), 2, true);
-        $userExam = self::userCourseExam(['quiz_id' => $quiz->id, 'user_id' => $userId]);
+        $userExam  = self::userCourseExam(['quiz_id' => $quiz->id, 'user_id' => $userId]);
+
+        // Determine whether to pre-populate answers (only when the quiz is locked/complete)
+        $isActive = isset($request->status) && in_array($request->status, ['start', 'try']);
+
         return [
             'status' => 'success',
-            'data' => [
-                'questions' => $questions,
-                'userExam' => $userExam ?? null,
-                'type' => 'quiz',
-                'quiz' => $quiz,
+            'data'   => [
+                'questions'  => $questions,
+                'userExam'   => $userExam ?? null,
+                'type'       => 'quiz',
+                'quiz'       => $quiz,
                 'chapter_id' => $request->chapter_id ?? null,
-                'topic_id' => $request->topic_id ?? null,
-                'course_id' => $courseId,
+                'topic_id'   => $request->topic_id ?? null,
+                'course_id'  => $courseId,
+                'is_active'  => $isActive,   // passed to blade to suppress pre-population
             ],
         ];
     }

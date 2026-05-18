@@ -97,9 +97,11 @@
                                 </svg>';
 
                     $status = translate('Not Yet');
+                    $isPassed = false;
                     if (isset($userQuiz->score)) {
+                        $isPassed = $quiz->pass_mark <= $userQuiz->score;
                         $status =
-                            $quiz->pass_mark <= $userQuiz->score
+                            $isPassed
                                 ? '<span class="text-success">' . translate('Passed') . '</span>'
                                 : '<span class="text-danger">' . translate('Fail') . '</span>';
                     }
@@ -118,17 +120,17 @@
             @else
                 @php
                     $attempt_number = $userQuiz->attempt_number ?? 0;
-                    $disabled = $attempt_number == $quiz->total_retake ? 'disabled' : '';
+                    $disabled = ($attempt_number == $quiz->total_retake || $isPassed) ? 'disabled' : '';
 
                 @endphp
                 <div class="grid grid-cols-2 gap-6">
                     @foreach ($questions as $questionList)
                         <x-theme::exam.quiz.question :questionList="$questionList" quizId="{{ $quiz->id }}"
-                            disabled="{{ $disabled }}" />
+                            disabled="{{ $disabled }}" isPassed="{{ $isPassed }}" />
                     @endforeach
                 </div>
 
-                @if ($attempt_number >= 1 && $attempt_number !== $quiz->total_retake && !$again && !isInstructor())
+                @if ($attempt_number >= 1 && $attempt_number !== $quiz->total_retake && !$again && !isInstructor() && !$isPassed)
                     <div class="flex justify-end mt-10">
                         <a class="quiz-btn btn b-solid btn-primary-solid h-12"
                             href="{{ route('exam.start', ['type' => $type, 'exam_type_id' => $exam_type_id, 'course_id' => $data['course_id'], 'status' => 'try']) }}">

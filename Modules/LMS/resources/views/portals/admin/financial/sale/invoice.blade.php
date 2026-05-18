@@ -48,13 +48,13 @@
                     <div class="text-[#111827] font-medium">
                         <span class="font-bold">{{ translate('Student Name') }}:</span>
                         <span class="text-[#111827]/80">
-                            {{ $studentTranslations['first_name'] ?? ($studentInfo->first_name ?? '') }}
-                            {{ $studentTranslations['last_name'] ?? ($studentInfo->last_name ?? '') }}
+                            {{ $studentTranslations['first_name'] ?? ($studentInfo?->first_name ?? '') }}
+                            {{ $studentTranslations['last_name'] ?? ($studentInfo?->last_name ?? '') }}
                         </span>
                     </div>
                     <div class="text-[#111827] font-medium">
                         <span class="text-[#111827]/80">
-                            <b> {{ translate('Student Phone') }}</b>: {{ $studentInfo->phone }}
+                            <b> {{ translate('Student Phone') }}</b>: {{ $studentInfo?->phone }}
                         </span>
                     </div>
 

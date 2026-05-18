@@ -109,7 +109,7 @@ class StudentController extends Controller
     public function profile($id)
     {
         // Retrieve the user by ID to display the profile.
-        $response = $this->user->first($id, withTrashed: true, relations: ['userable.country', 'userable.state', 'userable.city']);
+        $response = $this->user->first($id, withTrashed: true, relations: ['userable.country', 'userable.state', 'userable.city', 'enrollments.course']);
         $user =  $response['data'] ?? null;
         if (!$user) {
             return view('portal::admin.404');

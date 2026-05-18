@@ -36,6 +36,7 @@ class QuizQuestion extends Model
 
     public function questionScore(): HasOne
     {
-        return $this->hasOne(QuestionScore::class, 'question_id', 'question_id');
+        return $this->hasOne(QuestionScore::class, 'question_id', 'question_id')
+            ->where('user_id', authCheck()?->id ?? 0);
     }
 }

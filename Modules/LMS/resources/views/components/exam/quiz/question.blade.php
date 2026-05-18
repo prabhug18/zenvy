@@ -13,9 +13,9 @@
         </div>
         <ul class="question-options mt-6">
             @if ($question['question_type'] != 'fill-in-blank')
-                <x-theme::exam.quiz.single-multiple-question :question="$question" disabled="{{ $disabled }}" />
+                <x-theme::exam.quiz.single-multiple-question :question="$question" disabled="{{ $disabled }}" isPassed="{{ $isPassed ?? false }}" />
             @else
-                <x-theme::exam.quiz.fill-in-blank :question="$question" disabled="{{ $disabled }}" />
+                <x-theme::exam.quiz.fill-in-blank :question="$question" disabled="{{ $disabled }}" isPassed="{{ $isPassed ?? false }}" />
             @endif
         </ul>
 

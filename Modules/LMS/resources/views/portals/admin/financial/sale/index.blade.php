@@ -122,8 +122,8 @@
                                                     {{ $firstName . ' ' . $lastName }}
                                                 </a>
                                             </h6>
-                                            <p class="mb-1 text-sm"> {{ $studentInfo?->user?->email }}</p>
-                                            <p class="text-sm">{{ $studentInfo->phone }}</p>
+                                            <p class="mb-1 text-sm"> {{ $sale->user?->email }}</p>
+                                            <p class="text-sm">{{ $studentInfo?->phone }}</p>
 
                                         </div>
                                     </div>
@@ -134,23 +134,23 @@
                                             @php
                                                 $instructorInfo = $instructor->userable ?? null;
                                                 $instructorTranslations = [];
-                                                if ($studentInfo) {
+                                                if ($instructorInfo) {
                                                     $instructorTranslations = parse_translation($instructorInfo);
                                                 }
-                                                $firstName =
+                                                $iFirstName =
                                                     $instructorTranslations['first_name'] ??
-                                                    ($studentInfo?->first_name ?? '');
-                                                $lastName =
+                                                    ($instructorInfo?->first_name ?? '');
+                                                $iLastName =
                                                     $instructorTranslations['last_name'] ??
-                                                    ($studentInfo?->last_name ?? '');
+                                                    ($instructorInfo?->last_name ?? '');
                                             @endphp
                                             <div>
                                                 <h6
                                                     class="leading-none text-heading dark:text-white font-semibold capitalize">
-                                                    <a href="#"> {{ $firstName . ' ' . $lastName }} </a>
+                                                    <a href="#"> {{ $iFirstName . ' ' . $iLastName }} </a>
                                                 </h6>
-                                                <p class="mb-1 text-sm"> {{ $instructorInfo?->user?->email }}</p>
-                                                <p class="text-sm">{{ $instructorInfo->phone }}</p>
+                                                <p class="mb-1 text-sm"> {{ $instructor?->email }}</p>
+                                                <p class="text-sm">{{ $instructorInfo?->phone }}</p>
                                             </div>
                                         @endforeach
                                     </div>

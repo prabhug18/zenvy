@@ -78,6 +78,16 @@ class BootstrapMiddleware
         session()->put('locale', $locale);
         App::setLocale($locale);
 
+        // Block deactivated users
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->userable && isset($user->userable->status) && $user->userable->status == 0) {
+                Auth::logout();
+                session()->flush();
+                return redirect()->route('login')->with('error', translate('Your account is deactivated. Please contact support.'));
+            }
+        }
+
         $this->registerSingletons($guard, $defaultLanguage);
         $this->registerViews();
         $this->registerBlades();

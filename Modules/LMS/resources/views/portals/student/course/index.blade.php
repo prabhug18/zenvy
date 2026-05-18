@@ -13,7 +13,7 @@
                 {{ $enrollments->links('portal::admin.pagination.paginate') }}
             </div>
         @else
-            <x-portal::admin.empty-card title="You have no paid course to show" />
+            <x-portal::admin.empty-card title="You have no enrolled course to show" />
         @endif
     </div>
 </x-dashboard-layout>

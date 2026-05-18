@@ -46,7 +46,7 @@ class CartRepository
                 ];
             }
 
-            if (Cart::checkCartExist($request->id)) {
+            if (Cart::checkCartExist($request->id, $request->type) !== false) {
                 return [
                     'status' => 'error',
                     'message' => translate('Already in Cart'),

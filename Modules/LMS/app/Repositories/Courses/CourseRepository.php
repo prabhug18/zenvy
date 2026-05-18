@@ -261,6 +261,9 @@ class CourseRepository extends BaseRepository
         $course->courseOutComes()->sync($outcomeId);
         $course->courseRequirements()->sync($requirementId);
         $course->courseTags()->sync($request->tags);
+        
+        $course->syllabus = $request->syllabus;
+        $course->save();
 
         return $this->successResponse($course->id, $request->form_key);
     }
@@ -1134,6 +1137,21 @@ class CourseRepository extends BaseRepository
 
         $id = $request->id;
         $type = $request->type;
+
+        // Permission enforcement for enrolled students
+        if ($request->course_id && authCheck()) {
+            $enrollment = \Modules\LMS\Models\Purchase\PurchaseDetails::where([
+                'user_id' => authCheck()->id,
+                'course_id' => $request->course_id,
+            ])->whereNotNull('topic_permissions')->latest()->first();
+
+            if ($enrollment && !$enrollment->canAccessTopic($type)) {
+                return [
+                    'status' => 'error',
+                    'message' => translate('You do not have permission to access this content.'),
+                ];
+            }
+        }
 
         // Fetch model and related data based on type
         $topic['data'] = $this->fetchContentByType($type, $id);

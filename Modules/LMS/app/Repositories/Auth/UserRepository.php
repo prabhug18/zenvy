@@ -1036,6 +1036,14 @@ class UserRepository  extends BaseRepository
                 'message' => 'Email is not verified.',
             ];
         }
+
+        // Check if the user account is deactivated
+        if ($user->userable && isset($user->userable->status) && $user->userable->status == 0) {
+            return [
+                'status' => 'error',
+                'message' => 'Your account is deactivated. Please contact support.',
+            ];
+        }
         // Attempt to authenticate the user with the provided credentials
         if (Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password])) {
             // Define dashboard routes based on user guard types

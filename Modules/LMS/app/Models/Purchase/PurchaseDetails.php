@@ -22,6 +22,7 @@ class PurchaseDetails extends Model
 
     protected $casts = [
         'details' => 'array',
+        'topic_permissions' => 'array',
     ];
 
     public function course(): BelongsTo
@@ -45,5 +46,17 @@ class PurchaseDetails extends Model
     {
 
         return $this->belongsTo(Purchase::class);
+    }
+
+    /**
+     * Check if a topic type is permitted for this enrollment.
+     * Defaults to true if permissions are not set (backward compatible).
+     */
+    public function canAccessTopic(string $type): bool
+    {
+        if (is_null($this->topic_permissions)) {
+            return false; // restricted access by default
+        }
+        return $this->topic_permissions[$type] ?? false;
     }
 }

@@ -11,6 +11,7 @@ use Modules\LMS\Repositories\Auth\UserRepository;
 use Modules\LMS\Models\Certificate\UserCertificate;
 use Modules\LMS\Repositories\Student\StudentRepository;
 use Modules\LMS\Repositories\Certificate\CertificateRepository;
+use Modules\LMS\Models\Certificate\Certificate;
 
 
 class StudentController extends Controller
@@ -45,7 +46,8 @@ class StudentController extends Controller
     public function certificate()
     {
         $certificates = UserCertificate::where('user_id', authCheck()->id)->get();
-        return view('portal::student.certificate.index', compact('certificates'));
+        $certificateTemplate = Certificate::first()?->certificate_content ?? '';
+        return view('portal::student.certificate.index', compact('certificates', 'certificateTemplate'));
     }
 
     /**

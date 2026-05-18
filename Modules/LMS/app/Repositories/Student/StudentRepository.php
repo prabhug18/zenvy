@@ -26,9 +26,13 @@ class StudentRepository extends BaseRepository
         'save' => [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'email' => 'required|email|unique:users,email,guard',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|max:12|confirmed',
             'phone' => 'required|unique:students,phone',
+            'country_id' => 'required',
+            'state_id' => 'required',
+            'city_id' => 'required',
+            'address' => 'required',
         ],
         'update' => [
             'first_name' => 'required|string',
@@ -63,6 +67,12 @@ class StudentRepository extends BaseRepository
                 // Attach the uploaded image path to the request data.
                 $request->merge(['profile_img' => $imagePath]);
             }
+
+            // Set default values for status and is_verify
+            $request->merge([
+                'status' => 1,
+                'is_verify' => 0,
+            ]);
 
             // Attempt to save the student data from the request.
             $response = parent::save($request->all());

@@ -61,6 +61,7 @@ trait ChecksUserPurchasesTrait
             return PurchaseDetails::query()->where('user_id', $user->id)
                 ->where($this->getPurchaseIdColumn(), $this->id)
                 ->where('purchase_type',  $this->getPurchaseType())
+                ->where('status', \Modules\LMS\Enums\PurchaseStatus::COMPLETED)
                 ->orderBy('created_at', 'desc')
                 ->first();
         }

@@ -48,8 +48,9 @@
                                         ? asset(  "storage/lms/offline/documents/{$paymentDocument}")
                                         : '';
                             @endphp
+                            <tr>
                             <td class="px-3.5 py-4">
-                                {{ $user->first_name . ' ' . $user->last_name }}
+                                {{ $user?->first_name ?? ($offlinePayment->user?->email ?? translate('N/A')) }} {{ $user?->last_name ?? '' }}
                             </td>
                             <td class="px-3.5 py-4">
                                 {{ $currencySymbol }}{{ $offlinePayment->total_amount }}

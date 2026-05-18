@@ -21,14 +21,14 @@
         <div class="grid grid-cols-12 gap-5">
             <!-- START COURSE DETAILS -->
             <div class="col-span-full lg:col-span-8">
-                <!-- <div class="flex items-start gap-2.5">
+                <div class="flex items-start gap-2.5">
                     <div class="flex items-center gap-0.5 text-secondary">
                         {!! show_rating($reviews['average_rating']) !!}
                     </div>
                     <span class="text-heading/70 text-sm font-medium leading-none">({{ $reviews['total_rating'] ?? 0 }})
                         {{ translate('Rating') }}
                     </span>
-                </div> -->
+                </div>
                 <h2 class="area-title xl:text-[40px] mt-4">
                     {{ $translations['title'] ?? ($course->title ?? '') }}
                 </h2>
@@ -95,16 +95,21 @@
                             id="courseCurriculum">
                             {{ translate('Curriculum') }}
                         </button>
+                        <button type="button" aria-label="Course Syllabus tab"
+                            class="dashkit-tab-btn btn b-outline btn-primary-outline rounded-full [&.active]:bg-primary [&.active]:text-white [&.active]:border-transparent shrink-0"
+                            id="courseSyllabus">
+                            {{ translate('Syllabus') }}
+                        </button>
                         <button type="button" aria-label="Course Instructor tab"
                             class="dashkit-tab-btn btn b-outline btn-primary-outline rounded-full [&.active]:bg-primary [&.active]:text-white [&.active]:border-transparent shrink-0"
                             id="courseInstructor">
                             {{ translate('Instructor') }}
                         </button>
-                        <!-- <button type="button" aria-label="Course Review tab"
+                        <button type="button" aria-label="Course Review tab"
                             class="dashkit-tab-btn btn b-outline btn-primary-outline rounded-full [&.active]:bg-primary [&.active]:text-white [&.active]:border-transparent shrink-0"
                             id="courseReview">
                             {{ translate('Reviews') }}
-                        </button> -->
+                        </button>
                     </div>
                     <div class="dashkit-tab-content mt-[60px] *:hidden" id="courseDetailsTabContent">
                         <!-- COURSE OVERVIEW CONTENT -->
@@ -122,6 +127,23 @@
                         <!-- COURSE CURRICULUM CONTENT -->
                         <x-theme::course.details.course-curriculum :course="$course" :auth="$auth ?? false"
                             :purchaseCheck="$purchaseCheck ?? false" />
+
+                        <!-- COURSE SYLLABUS CONTENT -->
+                        <div class="dashkit-tab-pane course-details-tab-content [&>:not(:first-child)]:mt-10"
+                            data-tab="courseSyllabus">
+                            <article>
+                                <h2 class="area-title xl:text-3xl mb-5"> {{ translate('Course Syllabus') }} </h2>
+                                @if(!empty($course->syllabus))
+                                    <div class="p-5 border border-border rounded-xl">
+                                        {!! clean($course->syllabus) !!}
+                                    </div>
+                                @else
+                                    <div class="p-10 text-center border border-border rounded-xl">
+                                        <p class="text-heading/70 text-lg">{{ translate('No data found.') }}</p>
+                                    </div>
+                                @endif
+                            </article>
+                        </div>
 
                         <!-- COURSE INSTRUCTOR CONTENT -->
                         <div class="dashkit-tab-pane course-details-tab-content [&>:not(:first-child)]:mt-10"

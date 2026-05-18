@@ -41,6 +41,21 @@
                 </div>
             </div>
         </div>
+        <!-- COURSE SYLLABUS -->
+        <div class="card">
+            <div class="grid grid-cols-12 gap-y-5">
+                <div class="col-span-full">
+                    <div class="flex-center-between">
+                        <h6 class="leading-none text-xl font-semibold text-heading">
+                            {{ translate('Course Syllabus') }}
+                        </h6>
+                    </div>
+                </div>
+                <div class="col-span-full">
+                    <textarea name="syllabus" class="form-input summernote" placeholder="{{ translate('Enter syllabus details here...') }}">{{ $course->syllabus ?? '' }}</textarea>
+                </div>
+            </div>
+        </div>
         <!-- COURSE OUTCOME -->
         <div class="card">
             <div class="grid grid-cols-12 gap-y-5 outcome-item">

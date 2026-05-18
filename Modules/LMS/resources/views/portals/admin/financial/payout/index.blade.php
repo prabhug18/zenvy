@@ -80,7 +80,7 @@
                                             @endif
                                         </p>
                                         <p class="mb-1 text-sm"> {{ $payoutRequest?->user?->email }}</p>
-                                        <p class="text-sm"> {{ $userInfo->phone }}</p>
+                                        <p class="text-sm"> {{ $userInfo?->phone }}</p>
                                     </h6>
                                 </td>
                                 <td class="px-3.5 py-4">{{ $currencySymbol }}{{ $payoutRequest->amount }}</td>

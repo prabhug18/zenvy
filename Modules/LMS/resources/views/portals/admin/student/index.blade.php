@@ -140,7 +140,7 @@
                             <tr>
                                 <td class="px-4 py-4">
                                     <div class="flex items-center gap-3.5">
-                                        <a href="#"
+                                        <a href="{{ route('student.profile', $student->id) }}"
                                             class="size-12 rounded-50 overflow-hidden dk-theme-card-square">
                                             <img src="{{ $profileImg }}" alt="student"
                                                 class="size-full object-cover">
@@ -148,7 +148,7 @@
                                         <div>
                                             <h6
                                                 class="leading-none text-heading dark:text-white font-semibold capitalize">
-                                                <a href="#">
+                                                <a href="{{ route('student.profile', $student->id) }}">
                                                     {{ $firstName . ' ' . $lastName }}
                                                 </a>
                                             </h6>

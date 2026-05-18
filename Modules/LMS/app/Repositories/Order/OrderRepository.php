@@ -165,6 +165,7 @@ class OrderRepository
             'type' => $itemInfo['type'],
             'status' => $itemInfo['status'],
             'purchase_type' => $itemInfo['purchase_type'],
+            'topic_permissions' => $itemInfo['topic_permissions'] ?? null,
         ]);
         return $purchaseDetail;
     }

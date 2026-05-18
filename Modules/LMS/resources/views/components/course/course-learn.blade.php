@@ -5,7 +5,7 @@
 @if ($type == 'video')
     @if ($data->video_src_type == 'youtube' || $data->video_src_type == 'vimeo')
         <div class="plyr__video-embed" id="player">
-            <iframe src="{{ $data->video_url }}" allowfullscreen allowtransparency allow="autoplay"></iframe>
+            <iframe src="{{ format_embed_url($data->video_url) }}" allowfullscreen allowtransparency allow="autoplay"></iframe>
         </div>
         <script>
             new Plyr("#player", {

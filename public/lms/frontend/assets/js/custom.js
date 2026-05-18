@@ -229,7 +229,16 @@
         });
     };
 
+    // Guard flag: only allow quiz answer AJAX after a genuine user interaction.
+    // This prevents auto-firing when the browser renders pre-checked inputs on page load.
+    let userHasInteracted = false;
+    $(document).one("mousedown keydown touchstart", function () {
+        userHasInteracted = true;
+    });
+
     $(document).on("change", ".quizSelectAnswer", function (e) {
+        if (!userHasInteracted) return; // ignore browser-generated change on page load
+
         let form = $(this).closest("form");
         let action = form.attr("action");
         let courseId = $("#courseId").val();
@@ -253,6 +262,8 @@
     });
 
     $(document).on("blur", ".fill-in-blank", function () {
+        if (!userHasInteracted) return; // ignore browser-generated blur on page load
+
         let form = $(this).closest("form");
         let action = form.attr("action");
 

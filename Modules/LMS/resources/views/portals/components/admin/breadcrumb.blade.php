@@ -58,6 +58,7 @@
                     </a>
                 </div>
             @endif
+            {{ $slot ?? '' }}
         </div>
     </div>
 </div>

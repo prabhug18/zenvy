@@ -45,10 +45,17 @@
                         {{ customDateFormate($certificate->certificated_date, format: 'm D  Y') }}
                     </td>
                     <td class="px-3.5 py-4">
-                        <a href="{{ route('student.certificate.download', $certificate->id) }}" target="_blank"
-                            class="btn b-solid btn-info-solid btn-sm" title="{{ translate('Certificate Download') }}">
-                            {{ translate('View') }}
-                        </a>
+                        <div class="flex items-center gap-2">
+                            <a href="{{ route('student.certificate.download', $certificate->id) }}" target="_blank"
+                                class="btn-icon btn-info-icon-light size-8" title="{{ translate('View Certificate') }}">
+                                <i class="ri-eye-line text-inherit text-base"></i>
+                            </a>
+                            <a href="{{ route('student.certificate.download', $certificate->id) }}" target="_blank"
+                                class="btn-icon btn-primary-icon-light size-8" title="{{ translate('Download Certificate') }}"
+                                onclick="event.preventDefault(); window.open(this.href + '?download=1', '_blank');">
+                                <i class="ri-download-line text-inherit text-base"></i>
+                            </a>
+                        </div>
                     </td>
                 </tr>
             @endforeach

@@ -7,6 +7,7 @@ use Modules\LMS\Enums\ExamType;
 use Modules\LMS\Models\Auth\UserCourseExam;
 use Modules\LMS\Models\Courses\Topics\Quiz;
 use Modules\LMS\Models\Courses\Topics\Quizzes\QuestionAnswer;
+use Modules\LMS\Models\Courses\Topics\Quizzes\QuizQuestion;
 use Modules\LMS\Models\Courses\TopicType;
 use Modules\LMS\Models\QuestionScore;
 use Modules\LMS\Models\TakeAnswer;
@@ -143,15 +144,16 @@ class QuizRepository extends BaseRepository
      */
     public function takeAnswer($data)
     {
-
+        // Unique key scoped to exam + question + answer so different users' records are isolated
         TakeAnswer::updateOrCreate([
-            'quiz_question_id' => $data['quiz_question_id'] ?? null,
-            'question_answer' => $data['question_answer'] ?? null,
+            'user_course_exam_id' => $data['user_quiz_id'],
+            'quiz_question_id'   => $data['quiz_question_id'] ?? null,
+            'question_answer'    => $data['question_answer'] ?? null,
         ], [
             'user_course_exam_id' => $data['user_quiz_id'],
-            'quiz_question_id' => $data['quiz_question_id'],
-            'question_answer' => $data['question_answer'],
-            'value' => $data['value'] ?? null,
+            'quiz_question_id'   => $data['quiz_question_id'],
+            'question_answer'    => $data['question_answer'],
+            'value'              => $data['value'] ?? null,
         ]);
     }
 
@@ -167,8 +169,12 @@ class QuizRepository extends BaseRepository
             'score' => $totalScore,
         ])) {
             // Check for Certificate Eligibility
+            $userQuiz->load('course.courseSetting');
+            $course = $userQuiz->course;
+            $hasCertificate = $course?->courseSetting?->is_certificate ?? 0;
+
             $quiz = $userQuiz->quiz;
-            if ($quiz && $quiz->is_certificate && $totalScore >= $quiz->pass_mark) {
+            if ($quiz && $hasCertificate && $totalScore >= $quiz->pass_mark) {
                 // Auto-generate certificate via CertificateRepository
                 app(\Modules\LMS\Repositories\Certificate\CertificateRepository::class)->requestCertificate($userQuiz->id);
             }
@@ -180,13 +186,19 @@ class QuizRepository extends BaseRepository
     /**
      * takeAnswerDelete
      *
-     * @param  int  $id
+     * Scoped to the current user's exam so other students' answers are never affected.
+     *
+     * @param  int  $id          quiz_question_id
+     * @param  int  $userQuizId  user_course_exam_id
      * @return void
      */
-    public function takeAnswerDelete($id)
+    public function takeAnswerDelete($id, $userQuizId = null)
     {
-        $takeAnswer = TakeAnswer::where('quiz_question_id', $id);
-        $takeAnswer->delete();
+        $query = TakeAnswer::where('quiz_question_id', $id);
+        if ($userQuizId) {
+            $query->where('user_course_exam_id', $userQuizId);
+        }
+        $query->delete();
     }
 
     /**
@@ -243,8 +255,8 @@ class QuizRepository extends BaseRepository
         $rightCount = 0;
         $wrongCount = 0;
 
-        // Clear previous answers for the question
-        $this->takeAnswerDelete($questionId);
+        // Clear previous answers for this question scoped to the current user's exam
+        $this->takeAnswerDelete($questionId, $userQuiz->id);
 
         if (!empty($request->answers)) {
             foreach ($request->answers as $answer) {
@@ -255,9 +267,9 @@ class QuizRepository extends BaseRepository
 
                     // Save the user's answer
                     $this->takeAnswer([
-                        'user_quiz_id' => $userQuiz->id,
+                        'user_quiz_id'    => $userQuiz->id,
                         'quiz_question_id' => $questionId,
-                        'question_answer' => $answer,
+                        'question_answer'  => $answer,
                     ]);
                 }
             }
@@ -274,31 +286,33 @@ class QuizRepository extends BaseRepository
         $answerId = $request->answers[0] ?? null;
         $score = 0;
 
-        // Clear previous answers for the question
-        $this->takeAnswerDelete($questionId);
+        // Clear previous answers scoped to the current user's exam
+        $this->takeAnswerDelete($questionId, $userQuiz->id);
 
         if ($answerId) {
             $answer = QuestionAnswer::with('quizQuestion')->find($answerId);
             if ($answer) {
                 // Save the user's answer
                 $this->takeAnswer([
-                    'user_quiz_id' => $userQuiz->id,
+                    'user_quiz_id'    => $userQuiz->id,
                     'quiz_question_id' => $questionId,
-                    'question_answer' => $answerId,
+                    'question_answer'  => $answerId,
                 ]);
 
                 // Calculate score if the answer is correct
+                $realQuestionId = QuizQuestion::find($questionId)?->question_id ?? $questionId;
+
                 if ($answer->correct) {
                     $score = $answer->quizQuestion->mark;
                     QuestionScore::updateOrCreate(
-                        ['quiz_id' => $quizId, 'question_id' => $questionId, 'user_id' => authCheck()->id],
+                        ['quiz_id' => $quizId, 'question_id' => $realQuestionId, 'user_id' => authCheck()->id],
                         [
-                            'score' => $score,
+                            'score'  => $score,
                             'status' => true,
                         ]
                     );
                 } else {
-                    $this->questionScoreUpdate($questionId, authCheck()->id);
+                    $this->questionScoreUpdate($realQuestionId, authCheck()->id);
                 }
             }
         }
@@ -311,33 +325,43 @@ class QuizRepository extends BaseRepository
         $rightCount = 0;
         $wrongCount = 0;
 
-        // Clear previous answers for the question
-        $this->takeAnswerDelete($questionId);
+        // Clear previous answers scoped to the current user's exam
+        $this->takeAnswerDelete($questionId, $userQuiz->id);
 
-        foreach ($request->answers as $key => $answer) {
-            foreach ($answer as $index => $value) {
-                $value = implode(',', $value);
-                $questionAnswer = QuestionAnswer::with('answer')->where(['quiz_question_id' => $key, 'id' => $index])->first();
+        // Only process answers belonging to the CURRENT question being submitted.
+        // The request payload keys are quiz_question IDs. We must only evaluate
+        // the entry matching $questionId to avoid cross-contaminating other questions.
+        $answersForThisQuestion = $request->answers[$questionId] ?? [];
 
-                if ($questionAnswer) {
-                    // Compare the user's answer to the correct answer
-                    if ($questionAnswer->answer->name === $value) {
-                        $rightCount++;
-                    } else {
-                        $wrongCount++;
-                    }
+        if (empty($answersForThisQuestion)) {
+            // Nothing submitted for this question — mark as wrong and return 0
+            $this->questionScoreUpdate(
+                QuizQuestion::find($questionId)?->question_id ?? $questionId,
+                authCheck()->id
+            );
+            return 0;
+        }
 
-                    // Save the user's answer
-                    $this->takeAnswer([
-                        'user_quiz_id' => $userQuiz->id,
-                        'quiz_question_id' => $key,
-                        'question_answer' => $index,
-                        'value' => $value,
-                    ]);
-                } else {
-                    // Count as wrong if answer is missing
-                    $wrongCount++;
-                }
+        foreach ($answersForThisQuestion as $index => $value) {
+            $value = is_array($value) ? implode(',', $value) : $value;
+            $questionAnswer = QuestionAnswer::with('answer')
+                ->where(['quiz_question_id' => $questionId, 'id' => $index])
+                ->first();
+
+            if ($questionAnswer) {
+                // Case-insensitive, trimmed comparison for robustness
+                $correct = strtolower(trim($questionAnswer->answer->name)) === strtolower(trim($value));
+                $correct ? $rightCount++ : $wrongCount++;
+
+                // Save the user's answer
+                $this->takeAnswer([
+                    'user_quiz_id'     => $userQuiz->id,
+                    'quiz_question_id' => $questionId,
+                    'question_answer'  => $index,
+                    'value'            => $value,
+                ]);
+            } else {
+                $wrongCount++;
             }
         }
 
@@ -351,11 +375,13 @@ class QuizRepository extends BaseRepository
         $mark = 0;
         $userId = authCheck()->id;
 
+        $realQuestionId = QuizQuestion::find($questionId)?->question_id ?? $questionId;
+
         if ($rightCount > 0 && $wrongCount === 0) {
             // All answers are correct
             $mark = $this->getMarkForQuestion($questionId);
             QuestionScore::updateOrCreate(
-                ['quiz_id' => $quizId, 'question_id' => $questionId, 'user_id' => $userId],
+                ['quiz_id' => $quizId, 'question_id' => $realQuestionId, 'user_id' => $userId],
                 [
                     'score' => $mark,
                     'status' => true,
@@ -363,7 +389,7 @@ class QuizRepository extends BaseRepository
             );
         } else {
             // Handle case where answers are incorrect
-            $this->questionScoreUpdate($questionId, $userId);
+            $this->questionScoreUpdate($realQuestionId, $userId);
         }
 
         return $mark; // Return calculated score
@@ -371,7 +397,9 @@ class QuizRepository extends BaseRepository
 
     private function getMarkForQuestion($questionId)
     {
-        $question = QuestionAnswer::with('quizQuestion')->where('id', $questionId)->first();
-        return $question ? $question->quizQuestion->mark : 0;
+        // Bug fix: $questionId is a quiz_questions.id — query QuizQuestion directly
+        // The old code queried question_answers by id, which returned null for non-matching IDs
+        $question = QuizQuestion::find($questionId);
+        return $question ? $question->mark : 0;
     }
 }

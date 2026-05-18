@@ -79,7 +79,7 @@
                 </tbody>
             </table>
             <div class="flex-center gap-4 mt-5">
-                @if (purchaseCheck($bundle->id, type: 'bundle') !== true)
+                @if (purchaseCheck($bundle->id, type: 'bundle') === false)
                     @if (is_free($bundle->id, type: 'bundle'))
                         <form action="{{ route('course.enrolled') }}" method="POST">
                             @csrf

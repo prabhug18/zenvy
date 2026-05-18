@@ -61,27 +61,44 @@ class PurchaseRepository extends BaseRepository
         ];
         $purchase = $this->purchaseStore($data);
         foreach ($request->courses as $courseId) {
-            if (! static::$model::where(['user_id' => $userId, 'course_id' => $courseId])->exists()) {
-                $course = $this->courseGetById($courseId);
-                $response =  CartRepository::coursePrice($course);
-                $discount_price = $response['discount_price'] - ($item->coursePrice->platform_fee ??  $course->platform_fee);
-                if ($course) {
-                    $purchaseDetail = [
-                        'purchase_id' => $purchase->id,
-                        'course_id' => $courseId,
-                        'user_id' => $userId,
-                        'bundle_id' => null,
-                        'price' => $response['regular_price'] - ($item->coursePrice->platform_fee ??  $course->platform_fee),
-                        'platform_fee' => $item->coursePrice->platform_fee ??  $course->platform_fee ?? 0,
-                        'discount_price' => $discount_price,
-                        'details' => $course,
-                        'type' => PurchaseType::ENROLLED,
-                        'purchase_type' => PurchaseType::COURSE,
-                        'status' => PurchaseStatus::PROCESSING
+            $enrollment = static::$model::where(['user_id' => $userId, 'course_id' => $courseId])->first();
+            if ($enrollment) {
+                // Update permissions for existing enrollment
+                $enrollment->topic_permissions = [
+                    'video' => $request->input('topic_permissions.video') ? true : false,
+                    'assignment' => $request->input('topic_permissions.assignment') ? true : false,
+                    'quiz' => $request->input('topic_permissions.quiz') ? true : false,
+                    'reading' => $request->input('topic_permissions.reading') ? true : false,
+                ];
+                $enrollment->save();
+                continue;
+            }
 
-                    ];
-                    OrderRepository::purchaseDetails($purchaseDetail);
-                }
+            $course = $this->courseGetById($courseId);
+            $response =  CartRepository::coursePrice($course);
+            $platform_fee = $course->coursePrice->platform_fee ?? $course->platform_fee ?? 0;
+            $discount_price = $response['discount_price'] - $platform_fee;
+            if ($course) {
+                $purchaseDetail = [
+                    'purchase_id' => $purchase->id,
+                    'course_id' => $courseId,
+                    'user_id' => $userId,
+                    'bundle_id' => null,
+                    'price' => $response['regular_price'] - $platform_fee,
+                    'platform_fee' => $platform_fee,
+                    'discount_price' => $discount_price,
+                    'details' => $course,
+                    'type' => PurchaseType::ENROLLED,
+                    'purchase_type' => PurchaseType::COURSE,
+                    'status' => PurchaseStatus::COMPLETED,
+                    'topic_permissions' => [
+                        'video' => $request->input('topic_permissions.video') ? true : false,
+                        'assignment' => $request->input('topic_permissions.assignment') ? true : false,
+                        'quiz' => $request->input('topic_permissions.quiz') ? true : false,
+                        'reading' => $request->input('topic_permissions.reading') ? true : false,
+                    ],
+                ];
+                OrderRepository::purchaseDetails($purchaseDetail);
                 OrderRepository::profitShareCalculate($course,  $discount_price);
             }
         }
@@ -129,6 +146,13 @@ class PurchaseRepository extends BaseRepository
                 $userId = authCheck()->id;
                 $type = $request->type ?? 'course';
 
+                if (purchaseCheck($request->id, $type)) {
+                    return [
+                        'status' => 'error',
+                        'message' => translate('You are already enrolled')
+                    ];
+                }
+
                 // Prepare data for purchase record.
                 $purchaseData = [
                     'user_id' => $userId,
@@ -156,9 +180,16 @@ class PurchaseRepository extends BaseRepository
                 ]);
 
                 return [
-                    'status' => 'success'
+                    'status' => 'success',
+                    'slug' => $courseInfo->slug,
+                    'type' => $type
                 ];
             }
+            
+            return [
+                'status' => 'error',
+                'message' => translate('Course is not free.')
+            ];
         } catch (\Throwable $th) {
             return [
                 'status' => 'error',
@@ -197,8 +228,13 @@ class PurchaseRepository extends BaseRepository
      */
     public static function getByUserId($data)
     {
-        if (bundle_course_check($data['course_id']) ||  static::$model::where($data)->first()) {
-            return true;
+        if (bundle_course_check($data['course_id'])) {
+            return 'purchase';
+        }
+        
+        $record = static::$model::where($data)->first();
+        if ($record) {
+            return $record->type;
         }
         return false;
     }
@@ -266,6 +302,38 @@ class PurchaseRepository extends BaseRepository
         return [
             'status' => 'success',
             'message' => translate('Enrollment status updated successfully.')
+        ];
+    }
+    /**
+     * Update the topic permissions for a specific enrollment record.
+     *
+     * @param int $id
+     * @param mixed $request
+     * @return array
+     */
+    public function updatePermissions($id, $request): array
+    {
+        $enrollment = static::$model::find($id);
+
+        if (!$enrollment) {
+            return [
+                'status'  => 'error',
+                'message' => translate('Enrollment record not found.'),
+            ];
+        }
+
+        $enrollment->topic_permissions = [
+            'video'      => $request->input('topic_permissions.video') ? true : false,
+            'assignment' => $request->input('topic_permissions.assignment') ? true : false,
+            'quiz'       => $request->input('topic_permissions.quiz') ? true : false,
+            'reading'    => $request->input('topic_permissions.reading') ? true : false,
+        ];
+
+        $enrollment->save();
+
+        return [
+            'status'  => 'success',
+            'message' => translate('Permissions updated successfully.'),
         ];
     }
 }
