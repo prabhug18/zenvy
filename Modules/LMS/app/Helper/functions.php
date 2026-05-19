@@ -708,12 +708,17 @@ if (!function_exists('latestCategory')) {
                     'instructors',
                     function ($query1) {
                         $query1->where('is_verify', 1)
-                            ->withWhereHas(
+                            ->whereHasMorph(
                                 'userable',
+                                [
+                                    \Modules\LMS\Models\Auth\Instructor::class,
+                                    \Modules\LMS\Models\Auth\Organization::class
+                                ],
                                 function ($query2) {
                                     $query2->where('status', 1);
                                 }
-                            );
+                            )
+                            ->with('userable');
                     }
                 )
                 ->with('courseSetting');
@@ -748,12 +753,17 @@ if (!function_exists('courseCategory')) {
                         'instructors',
                         function ($query1) {
                             $query1->where('is_verify', 1)
-                                ->with(
+                                ->whereHasMorph(
                                     'userable',
+                                    [
+                                        \Modules\LMS\Models\Auth\Instructor::class,
+                                        \Modules\LMS\Models\Auth\Organization::class
+                                    ],
                                     function ($query2) {
                                         $query2->where('status', 1);
                                     }
-                                );
+                                )
+                                ->with('userable');
                         }
                     )
                     ->with('courseSetting');
@@ -1036,7 +1046,10 @@ if (! function_exists('instructorCourse')) {
     {
         $model = User::query();
 
-        return $model->whereHas('userable', function ($query) {
+        return $model->whereHasMorph('userable', [
+            \Modules\LMS\Models\Auth\Instructor::class,
+            \Modules\LMS\Models\Auth\Organization::class
+        ], function ($query) {
             $query->where('status', 1);
         })
             ->withWhereHas('courses', function ($query) {
@@ -1060,7 +1073,10 @@ if (! function_exists('get_course_by_instructorId')) {
         if (!$id) {
             return [];
         }
-        $instructor = $model->whereHas('userable', function ($query) {
+        $instructor = $model->whereHasMorph('userable', [
+            \Modules\LMS\Models\Auth\Instructor::class,
+            \Modules\LMS\Models\Auth\Organization::class
+        ], function ($query) {
             $query->where('status', 1);
         })
             ->withWhereHas('courses', function ($query) {

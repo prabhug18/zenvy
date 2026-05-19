@@ -161,7 +161,10 @@ class HomeController extends Controller
             $courses = Course::with('reviews', 'translations')->whereHas('instructors', function ($query) use ($id) {
                 $query->where('instructor_id', $id)
                     ->where('is_verify', 1)
-                    ->whereHas('userable', function ($query) {
+                    ->whereHasMorph('userable', [
+                        \Modules\LMS\Models\Auth\Instructor::class,
+                        \Modules\LMS\Models\Auth\Organization::class
+                    ], function ($query) {
                         $query->where('status', 1);
                     });
             })

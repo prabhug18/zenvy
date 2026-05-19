@@ -54,7 +54,10 @@ class HomeRepository extends BaseRepository
                             $query->where('status', CourseStatus::APPROVED)
                                 ->where(function($q) {
                                     $q->whereHas('instructors', function ($query1) {
-                                        $query1->whereHas('userable', function ($query2) {
+                                        $query1->whereHasMorph('userable', [
+                                            \Modules\LMS\Models\Auth\Instructor::class,
+                                            \Modules\LMS\Models\Auth\Organization::class
+                                        ], function ($query2) {
                                                 $query2->where('status', 1);
                                             });
                                     })->orWhereDoesntHave('instructors');

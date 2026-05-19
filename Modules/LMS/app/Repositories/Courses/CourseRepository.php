@@ -944,7 +944,10 @@ class CourseRepository extends BaseRepository
                 $query->where('status', CourseStatus::APPROVED)
                     ->where(function ($q) {
                         $q->whereHas('instructors', function ($query1) {
-                            $query1->whereHas('userable', function ($query2) {
+                            $query1->whereHasMorph('userable', [
+                                \Modules\LMS\Models\Auth\Instructor::class,
+                                \Modules\LMS\Models\Auth\Organization::class
+                            ], function ($query2) {
                                     $query2->where('status', 1);
                                 });
                         })->orWhereDoesntHave('instructors');
@@ -1275,7 +1278,10 @@ class CourseRepository extends BaseRepository
             $query->whereHas('instructors', function ($query) use ($instructors) {
                 $query->whereIn('instructor_id', explode(',', $instructors))
                     ->where('is_verify', 1)
-                    ->whereHas('userable', function ($query) {
+                    ->whereHasMorph('userable', [
+                        \Modules\LMS\Models\Auth\Instructor::class,
+                        \Modules\LMS\Models\Auth\Organization::class
+                    ], function ($query) {
                         $query->where('status', 1);
                     });
             });
@@ -1389,7 +1395,10 @@ class CourseRepository extends BaseRepository
     {
         $query->where(function($q) {
             $q->whereHas('instructors', function ($q2) {
-                $q2->whereHas('userable', function ($q3) {
+                $q2->whereHasMorph('userable', [
+                    \Modules\LMS\Models\Auth\Instructor::class,
+                    \Modules\LMS\Models\Auth\Organization::class
+                ], function ($q3) {
                        $q3->where('status', 1);
                    });
             })->orWhereDoesntHave('instructors');
