@@ -1,4 +1,4 @@
-{{-- @php
+@php
     $answers = [];
     $questionScore = $question['question_score'] ?? null;
     $isPassed = $isPassed ?? false;
@@ -30,4 +30,4 @@
     @php
         reset($answers);
     @endphp
-@endif --}}
+@endif

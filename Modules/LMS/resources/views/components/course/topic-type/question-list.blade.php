@@ -73,25 +73,19 @@
                             }
                         @endphp
                         <div class="mt-10 mb-11">
-                            <label for="quiz-grade" class="form-label">
-                                {{ translate('Select the word in your question you want to appear in blank') }}
-                                (_______).
+                            <label for="fill-blank-answer" class="form-label">
+                                {{ translate('Enter the correct answer for blank') }}(_______).
                             </label>
-                            <input type="text" class="form-input choices-input" name="answers[]"
-                                value="{{ implode(',', $list) }}">
+                            <input type="text"
+                                id="fill-blank-answer"
+                                name="answers[]"
+                                class="form-input"
+                                placeholder="{{ translate('e.g. apple (use commas for multiple: apple, orange)') }}"
+                                value="{{ implode(', ', array_filter(array_map('trim', $list))) }}">
+                            <small class="text-gray-400 dark:text-dark-text mt-1.5 block text-sm">
+                                {{ translate('Separate multiple correct answers with commas.') }}
+                            </small>
                         </div>
-                        <script>
-                            var choiseInput = document.querySelectorAll(".choices-input");
-                            choiseInput.forEach((input) => {
-                                var example = new Choices(input, {
-                                    removeItemButton: true,
-                                    maxItemCount: 3,
-                                    duplicateItemsAllowed: false,
-                                    allowHTML: true,
-                                    searchEnabled: true,
-                                });
-                            });
-                        </script>
                     @else
                         <button type="button" aria-label="Add quiz answer option"
                             class="btn b-solid btn-primary-solid addQuizAns mt-3"

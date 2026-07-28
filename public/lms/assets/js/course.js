@@ -378,10 +378,11 @@ $(function () {
         } else if (quizType == "fill-in-blank") {
             $(ansList).html(`
             <div class="mt-10 mb-11">
-                <label for="quiz-grade" class="form-label">${writeCorrectWord} (_______).</label>
-                <input type="text" class="form-input choices-input" name=answers[]" >
+                <label for="fill-blank-answer" class="form-label">${writeCorrectWord} (_______).</label>
+                <input type="text" id="fill-blank-answer" name="answers[]" class="form-input"
+                    placeholder="e.g. apple (use commas for multiple: apple, orange)">
+                <small class="text-gray-400 mt-1.5 block text-sm">Separate multiple correct answers with commas.</small>
             </div>`);
-            choicesInput();
         }
     });
 
@@ -427,6 +428,8 @@ $(function () {
                 duplicateItemsAllowed: false,
                 allowHTML: true,
                 searchEnabled: true,
+                addItems: true,
+                addItemText: (value) => `Press Enter to add "<b>${value}</b>"`,
             });
         });
     }

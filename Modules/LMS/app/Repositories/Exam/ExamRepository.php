@@ -175,6 +175,9 @@ class ExamRepository extends BaseRepository
             'questions.questionAnswers.takeAnswer',
             'topic.chapter.course' => function ($query) {
                 $query->select('id', 'title', 'slug');
+            },
+            'topic.course' => function ($query) {
+                $query->select('id', 'title', 'slug');
             }
         ]);
         $quiz = $response['data'] ?? null;

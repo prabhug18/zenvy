@@ -137,12 +137,12 @@ class QuizQuestionRepository extends BaseRepository
             QuestionAnswer::where('quiz_question_id', $questionId)->delete();
             if ($questionType == QuestionTypes::FILL_IN_BLANK) {
                 $answers = implode(',', $answers);
-                $answers = explode(',', $answers);
+                $answers = array_filter(array_map('trim', explode(',', $answers)));
                 foreach ($answers as $answer) {
-                    if (isset($answer)) {
+                    if ($answer !== '') {
                         QuestionAnswer::create(
                             [
-                                'answer_id' => self::answerSave($answer),
+                                'answer_id'       => self::answerSave($answer),
                                 'quiz_question_id' => $questionId,
                             ]
                         );

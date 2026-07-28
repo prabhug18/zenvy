@@ -18,7 +18,7 @@
         <!-- QUIZ HEADER -->
         <div class="flex !justify-end sm:!justify-between gap-4">
             <div class="hidden sm:block grow">
-                <h2 class="area-title text-2xl"> {{ $quiz?->topic?->chapter?->course?->title ?? '' }}</h2>
+                <h2 class="area-title text-2xl"> {{ $quiz?->topic?->course?->title ?? $quiz?->topic?->chapter?->course?->title ?? '' }}</h2>
                 <ul class="flex items-center flex-wrap gap-1.5 *:flex-center *:gap-1.5 leading-none mt-4">
                     @if ($quiz?->topic?->chapter?->title)
                         <li class="text-lg leading-none font-semibold text-heading/90 after:font-remix after:flex-center after:font-thin after:text-heading/60 after:size-5 after:content-['\f2e5'] rtl:after:content-['\f2e3'] after:translate-y-[1.4px] last:after:hidden">
@@ -33,7 +33,7 @@
             <div class="shrink-0">
                 @php
                     $actionRoute = route('play.course', [
-                        'slug' => $quiz?->topic?->chapter?->course?->slug,
+                        'slug' => $quiz?->topic?->course?->slug ?? $quiz?->topic?->chapter?->course?->slug ?? '',
                         'topic_id' => $quiz?->topic?->id ?? null,
                         'type' => $type,
                         'chapter_id' => $quiz?->topic?->chapter?->id ?? null,
