@@ -148,7 +148,7 @@ class NoticesBoardRepository extends BaseRepository
                 $emails = [];
 
                 return self::getMails($users);
-            case 'instructor-student':
+            case 'student-instructor':
                 $users = static::$modelTwo::where('guard', '!=', 'organization')->get();
                 if (! empty($data)) {
                     NotificationFormat::notifyToUser($users, $data);

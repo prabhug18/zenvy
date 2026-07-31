@@ -1,4 +1,4 @@
-<div class="col-span-full lg:col-span-6 2xl:col-span-4 card px-0 order-3 2xl:order-none">
+<!-- <div class="col-span-full lg:col-span-6 2xl:col-span-4 card px-0 order-3 2xl:order-none">
     <div class="flex-center-between px-6 mb-7">
         <h6 class="card-title">{{ translate('Support request') }}</h6>
         @if (count($supports) > 0)
@@ -48,4 +48,4 @@
             @endforeach
         </ul>
     </div>
-</div>
+</div> -->

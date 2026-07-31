@@ -178,6 +178,15 @@ class StudentRepository extends BaseRepository
             static::$rules['update']['password'] = 'required|min:5|max:12|confirmed';
         }
 
+        // Run validation before modifying any data or uploading files
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), static::$rules['update']);
+        if ($validator->fails()) {
+            return [
+                'status' => 'error',
+                'data' => $validator->errors()->toArray(),
+            ];
+        }
+
         // Handle image upload and replace existing image if any
         if ($request->hasFile('image')) {
             static::$rules['update']['image'] = 'required|image|mimes:jpg,png,svg,webp,jpeg';

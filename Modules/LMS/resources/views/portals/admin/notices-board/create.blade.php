@@ -22,7 +22,7 @@
                             <option value="student"> {{ translate('Students') }} </option>
                             <option value="instructor"> {{ translate('Instructors') }} </option>
                             <option value="student-instructor"> {{ translate('Students and Instructors') }} </option>
-                            <option value="organization"> {{ translate('Organization') }} </option>
+                            <!-- <option value="organization"> {{ translate('Organization') }} </option> -->
                         </select>
                         <span class="text-danger error-text type_err"></span>
                     </div>

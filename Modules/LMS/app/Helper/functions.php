@@ -1449,7 +1449,7 @@ if (! function_exists('getCourseByStatus')) {
     function getCourseByStatus($status = null)
     {
         $course = Course::query();
-        return $course->where('status', CourseStatus::APPROVED)
+        return $course->whereIn('status', [\Modules\LMS\Enums\CourseStatus::APPROVED, \Modules\LMS\Enums\CourseStatus::PENDING])
             ->whereHas('courseSetting', function ($query) use ($status) {
                 if ($status == 'free') {
                     $query->where('is_free', 1);

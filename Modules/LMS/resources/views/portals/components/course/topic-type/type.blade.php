@@ -254,9 +254,11 @@
             <select class="singleSelect2" name="quiz_type_id" required>
                 <option selected disabled>{{ translate('Select Type') }}</option>
                 @foreach (get_all_quiz_type() as $quizType)
+                    @if($quizType->slug !== 'practices')
                     <option value="{{ $quizType->id }}"
                         {{ !empty($topic) ? ($topic?->topicable?->quiz_type_id == $quizType->id ? 'selected' : '') : '' }}>
                         {{ $quizType->name }}</option>
+                    @endif
                 @endforeach
             </select>
             <span class="text-danger error-text quiz_type_id_err"></span>

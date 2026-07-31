@@ -73,7 +73,7 @@
                 </select>
             </div>
             @if (!$isOrganization && !$isInstructor)
-                <div class="col-span-full sm:col-span-2 xl:col-auto">
+                <!-- <div class="col-span-full sm:col-span-2 xl:col-auto">
                     <label class="form-label"> {{ translate('Organization') }} </label>
                     @php
                         $organizations = Request()->organizations ?? null;
@@ -90,7 +90,7 @@
                             </option>
                         @endforeach
                     </select>
-                </div>
+                </div> -->
             @endif
 
             @if (!$isInstructor)

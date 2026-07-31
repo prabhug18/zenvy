@@ -53,7 +53,7 @@ class ContactRepository extends BaseRepository
         if ($contact['status'] === 'success') {
             try {
                 $adminEmail = app()->isLocal()
-                    ? 'prabhu.ctrlnext@gmail.com'
+                    ? 'santhoshkumar.ctrlnext@gmail.com'
                     : 'zenvycoaching@gmail.com';
 
                 $mailData = [
@@ -84,7 +84,7 @@ class ContactRepository extends BaseRepository
     {
         try {
             $data = [
-                'notice_title' => $request->title,
+                'title' => $request->title ?? 'Reply from Support',
                 'message' => $request->message,
             ];
             Mail::to($request->email)->queue(new NoticesMail($data));

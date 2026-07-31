@@ -43,7 +43,7 @@ class EnrollmentController extends Controller
         if ($enrolled['status'] !== 'success') {
             return response()->json($enrolled);
         }
-        return $this->jsonSuccess('Enrolled Successfully!', route('enrollment.index'));
+        return $this->jsonSuccess('Enrolled Successfully!', route('sale.index'));
     }
     public function show($id)
     {

@@ -20,7 +20,7 @@
                             <span class="text-danger error-text discount_percentage_err"></span>
                         </div>
                         <div class="mt-4">
-                            <label for="max-amount" class="form-label"> {{ translate('Max Amount') }} ($) <span class="text-danger"
+                            <label for="max-amount" class="form-label"> {{ translate('Max Amount') }} (₹) <span class="text-danger"
                                 title="{{ translate('This field is required') }}"><b>*</b></span></label>
                             <input type="number" id="max-amount" name="max_amount" class="form-input" autocomplete="off"
                                 placeholder="{{ translate('150') }}" value="{{ isset($coupon) ? $coupon->max_amount : '' }}" />
@@ -37,7 +37,7 @@
                                 title="{{ translate('This field is required') }}"><b>*</b></span></label>
                             <div class="flex">
                                 <span class="form-input-group input-icon !text-gray-900 !w-10 !rounded-r-none">
-                                    $
+                                    ₹
                                 </span>
                                 <input type="number" id="discount-amount" class="form-input !rounded-l-none"
                                     autocomplete="off" name="max_amount" value="{{ isset($coupon) ? $coupon->max_amount : '' }}" />

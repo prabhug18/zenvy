@@ -90,7 +90,7 @@
                                         class="flex items-center justify-end relative before:absolute before:right-0 before:bottom-0 before:size-[110%] xl:before:h-[115%] before:bg-[url('/lms/frontend/assets/images/banner/home-five/brush-bg.png')] before:bg-no-repeat before:bg-cover before:bg-center">
                                         <div
                                             class="aspect-square max-w-[550px] image-mask mask-banner-thumb overflow-hidden">
-                                            <img data-src="{{ $thumbnail }}" alt="Hero banner"
+                                            <img src="{{ $thumbnail }}" alt="Hero banner"
                                                 class="size-full object-cover">
                                         </div>
                                     </div>
@@ -113,7 +113,7 @@
             </li>
             <!-- BOTTOM RIGHT -->
             <li class="absolute bottom-0 right-0 rtl:right-auto rtl:left-0 z-0"><img
-                    data-src="{{ asset('lms/frontend/assets/images/banner/home-five/color-paint.png') }}"
+                    src="{{ asset('lms/frontend/assets/images/banner/home-five/color-paint.png') }}"
                     alt="color paint"></li>
         </ul>
     </div>

@@ -24,10 +24,10 @@
                             style="background: url('{{ asset('lms/assets/images/certificate-template.jpg') }}'); background-repeat:no-repeat; background-size: 100% 100% ">
                             <div data-name="student" class="dragable-element">{student_name}</div>
                             <div data-name="platform-name" class="dragable-element">{platform_name}</div>
-                            <div data-name="course-completed-date" class="dragable-element">{course_title}</div>
+                            <div data-name="course-title" class="dragable-element">{course_title}</div>
                             <div data-name="course-completed-date" class="dragable-element">
                                 {course_completed_date} </div>
-                            <div data-name="course-completed-date" class="dragable-element">{instructor_name}
+                            <div data-name="instructor-name" class="dragable-element">{instructor_name}
                             </div>
                         </div>
                     @endif

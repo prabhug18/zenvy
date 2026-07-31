@@ -45,6 +45,10 @@
                                         class="btn-icon btn-primary-icon-light size-8">
                                         <i class="ri-edit-2-line text-inherit text-base"></i>
                                     </a>
+                                    <a href="{{ route('certificate.preview', $certificate->id) }}" target="_blank"
+                                        class="btn-icon btn-info-icon-light size-8" title="Preview Certificate">
+                                        <i class="ri-eye-line text-inherit text-base"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>

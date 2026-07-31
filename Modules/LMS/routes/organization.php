@@ -115,6 +115,7 @@ Route::group(
 
         Route::group(['prefix' => 'review'],   function () {
             Route::resource('course-review', ReviewController::class);
+            Route::post('course-review/{id}/status', [ReviewController::class, 'statusUpdate'])->name('course-review.status');
         });
     }
 );

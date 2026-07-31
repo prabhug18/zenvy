@@ -5,7 +5,7 @@
 
     <form action="{{ route('contact.reply') }}" method="post" class="form">
         @csrf
-        <input type="hidden" name="title" value="{{ $contact->title }}" class="form-input">
+        <input type="hidden" name="title" value="{{ $contact->subject ?? 'Reply to your inquiry' }}" class="form-input">
         <div class="card">
             <div class="grid grid-cols-2 gap-x-4 gap-y-5">
                 <div class="col-span-full xl:col-auto leading-none">

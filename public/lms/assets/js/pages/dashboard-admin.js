@@ -30,11 +30,9 @@ const instructorStudent = {
         offsetX: 4,
     },
     yaxis: {
-        min: 5,
-        max: 90,
-        tickAmount: 5,
+        min: 0,
         labels: {
-            formatter: (val) => val,
+            formatter: (val) => Math.round(val),
         },
     },
     series: [

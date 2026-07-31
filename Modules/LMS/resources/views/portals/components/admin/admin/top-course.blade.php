@@ -1,5 +1,5 @@
 <!-- Course Table -->
-<div class="overflow-x-auto scrollbar-table max-h-[350px] smooth-scrollbar" data-scrollbar>
+<div class="overflow-x-auto scrollbar-table max-h-[250px] smooth-scrollbar" data-scrollbar>
 
     @if ($topCourses->count() > 0)
         <table

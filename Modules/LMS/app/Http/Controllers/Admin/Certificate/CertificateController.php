@@ -72,4 +72,30 @@ class CertificateController extends Controller
             'message' => translate('Update Successfully'),
         ];
     }
+
+    /**
+     * Preview the specified resource with dummy data.
+     */
+    public function preview($id)
+    {
+        $certificateRes = $this->certificate->first($id);
+        $certificate = $certificateRes['data'];
+        
+        if (!$certificate) {
+            return back()->with('error', translate('Certificate not found'));
+        }
+
+        $setting = get_theme_option('backend_setting') ?? [];
+        $platformName = $setting['app_name'] ?? config('app.name');
+
+        $content = str_replace(
+            ['{student_name}', '{platform_name}', '{course_title}', '{instructor_name}', '{course_completed_date}'],
+            ['Santhosh (Test Student)', $platformName, 'Mastering Web Development (Test Course)', 'Jane Smith (Test Instructor)', date('d-m-Y')],
+            $certificate->certificate_content
+        );
+
+        $certificate->certificate_content = $content;
+
+        return view('portal::certificate.download', compact('certificate'));
+    }
 }

@@ -16,6 +16,10 @@
                             </th>
                             <th
                                 class="px-3.5 py-4 bg-[#F2F4F9] dark:bg-dark-card-two first:rounded-l-lg last:rounded-r-lg first:dk-theme-card-square-left last:dk-theme-card-square-right">
+                                {{ translate('Send To') }}
+                            </th>
+                            <th
+                                class="px-3.5 py-4 bg-[#F2F4F9] dark:bg-dark-card-two first:rounded-l-lg last:rounded-r-lg first:dk-theme-card-square-left last:dk-theme-card-square-right">
                                 {{ translate('Message') }}
                             </th>
                             <th
@@ -32,6 +36,21 @@
                         @foreach ($noticesBoards as $noticeBoard)
                             <tr>
                                 <td class="px-3.5 py-4">{{ $noticeBoard->title }}</td>
+                                <td class="px-3.5 py-4">
+                                    @switch($noticeBoard->type)
+                                        @case('student')
+                                            {{ translate('Student') }}
+                                            @break
+                                        @case('instructor')
+                                            {{ translate('Instructor') }}
+                                            @break
+                                        @case('student-instructor')
+                                            {{ translate('Instructor and student') }}
+                                            @break
+                                        @default
+                                            {{ translate(ucfirst($noticeBoard->type ?? '')) }}
+                                    @endswitch
+                                </td>
                                 <td class="px-3.5 py-4">
                                     <button class="btn b-light btn-info-light"
                                         data-modal-target="viewMassage{{ $noticeBoard->id }}"

@@ -43,6 +43,17 @@ class PurchaseRepository extends BaseRepository
                 'data' => $validator->errors()->toArray(),
             ];
         }
+        foreach ($request->courses as $courseId) {
+            $enrollment = static::$model::where(['user_id' => $userId, 'course_id' => $courseId])->first();
+            if ($enrollment) {
+                $course = $this->courseGetById($courseId);
+                return [
+                    'status' => 'error',
+                    'message' => translate("Enrollment to this student for the course '{$course?->title}' is already available and billed.")
+                ];
+            }
+        }
+
         $coursePrice = 0;
         $discountPrice = 0;
 
@@ -61,19 +72,6 @@ class PurchaseRepository extends BaseRepository
         ];
         $purchase = $this->purchaseStore($data);
         foreach ($request->courses as $courseId) {
-            $enrollment = static::$model::where(['user_id' => $userId, 'course_id' => $courseId])->first();
-            if ($enrollment) {
-                // Update permissions for existing enrollment
-                $enrollment->topic_permissions = [
-                    'video' => $request->input('topic_permissions.video') ? true : false,
-                    'assignment' => $request->input('topic_permissions.assignment') ? true : false,
-                    'quiz' => $request->input('topic_permissions.quiz') ? true : false,
-                    'reading' => $request->input('topic_permissions.reading') ? true : false,
-                ];
-                $enrollment->save();
-                continue;
-            }
-
             $course = $this->courseGetById($courseId);
             $response =  CartRepository::coursePrice($course);
             $platform_fee = $course->coursePrice->platform_fee ?? $course->platform_fee ?? 0;

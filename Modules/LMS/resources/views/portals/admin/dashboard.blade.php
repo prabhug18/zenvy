@@ -17,7 +17,7 @@
         <x-portal::admin.admin.trending-category :topCategories="$data['top_category_courses']" />
         <!-- End Trending Category -->
 
-        <div class="col-span-full 2xl:col-span-4 card">
+        <div class="col-span-full lg:col-span-8 2xl:col-span-8 card">
             <div class="flex-center-between mb-6">
                 <h6 class="card-title"> {{ translate('Top performing courses') }} </h6>
                 @if (count($data['top_courses']) > 0)

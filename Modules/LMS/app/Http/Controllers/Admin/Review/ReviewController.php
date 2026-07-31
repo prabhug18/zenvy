@@ -88,4 +88,19 @@ class ReviewController extends Controller
         $response['url'] = route('course-review.index');
         return response()->json($response);
     }
+
+    /**
+     * Update the status of the specified Review.
+     */
+    public function statusUpdate($id): JsonResponse
+    {
+        $review = \Modules\LMS\Models\Courses\Review::findOrFail($id);
+        $review->status = !$review->status;
+        $review->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => translate('Review status updated successfully!')
+        ]);
+    }
 }

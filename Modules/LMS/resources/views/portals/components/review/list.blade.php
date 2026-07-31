@@ -1,15 +1,18 @@
 @php
     $editRoute = 'course-review.edit';
     $deleteRoute = 'course-review.destroy';
+    $statusRoute = 'course-review.status';
 
     if (isOrganization()) {
         $editRoute = 'organization.course-review.edit';
         $deleteRoute = 'organization.course-review.destroy';
+        $statusRoute = 'organization.course-review.status';
     }
 
     if (isInstructor()) {
         $editRoute = 'instructor.course-review.edit';
         $deleteRoute = 'instructor.course-review.destroy';
+        $statusRoute = 'instructor.course-review.status';
     }
     $isStudent = isStudent();
     if ($isStudent) {
@@ -94,7 +97,7 @@
                     <label class="inline-flex items-center cursor-pointer">
                         <input type="checkbox" class="appearance-none peer review-status-toggle" 
                                data-id="{{ $review->id }}" 
-                               data-url="{{ route('instructor.course-review.status', $review->id) }}"
+                               data-url="{{ route($statusRoute, $review->id) }}"
                                {{ $review->status ? 'checked' : '' }}>
                         <span class="switcher switcher-primary-solid"></span>
                     </label>

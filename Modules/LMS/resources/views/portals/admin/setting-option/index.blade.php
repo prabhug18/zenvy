@@ -32,20 +32,20 @@
                     <i class="ri-dv-line text-inherit"></i>
                     {{ translate('Logo') }}
                 </button>
-                <button
+                <!-- <button
                     class="tablinks btn b-outline btn-primary-outline border-primary-200 justify-start !grow shrink-0 lg:w-full text-sm !text-gray-500 dark:!text-white hover:!text-primary hover:!bg-primary-200 dark:hover:!bg-dark-icon [&.active]:bg-primary-200 dark:[&.active]:bg-dark-icon [&.active]:border-transparent [&.active]:!text-primary dk-theme-card-square ac-transition"
                     onclick="openStep(event, 'cookie')">
                     <i class="ri-server-line text-inherit"></i>
                     {{ translate('GDPR Cookie') }}
-                </button>
-                <button
+                </button> -->
+                <!-- <button
                     class="tablinks btn b-outline btn-primary-outline border-primary-200 justify-start !grow shrink-0 lg:w-full text-sm !text-gray-500 dark:!text-white hover:!text-primary hover:!bg-primary-200 dark:hover:!bg-dark-icon [&.active]:bg-primary-200 dark:[&.active]:bg-dark-icon [&.active]:border-transparent [&.active]:!text-primary dk-theme-card-square ac-transition"
                     onclick="openStep(event, 'tawk-chat')">
                     <i class="ri-kakao-talk-line text-inherit"></i>
                     {{ translate('Tawk Chat') }}
-                </button>
+                </button> -->
 
-                <button
+                <!-- <button
                     class="tablinks btn b-outline btn-primary-outline border-primary-200 justify-start !grow shrink-0 lg:w-full text-sm !text-gray-500 dark:!text-white hover:!text-primary hover:!bg-primary-200 dark:hover:!bg-dark-icon [&.active]:bg-primary-200 dark:[&.active]:bg-dark-icon [&.active]:border-transparent [&.active]:!text-primary dk-theme-card-square ac-transition"
                     onclick="openStep(event, 'mailchimp')">
                     <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@
                         </g>
                     </svg>
                     {{ translate('Mailchimp') }}
-                </button>
+                </button> -->
                 <button
                     class="tablinks btn b-outline btn-primary-outline border-primary-200 justify-start !grow shrink-0 lg:w-full text-sm !text-gray-500 dark:!text-white hover:!text-primary hover:!bg-primary-200 dark:hover:!bg-dark-icon [&.active]:bg-primary-200 dark:[&.active]:bg-dark-icon [&.active]:border-transparent [&.active]:!text-primary dk-theme-card-square ac-transition"
                     onclick="openStep(event, 'social')">

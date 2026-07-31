@@ -25,19 +25,19 @@
                     {{ translate('SMTP Setting') }}
                 </button>
 
-                <button
+                <!-- <button
                     class="tablinks btn b-outline btn-primary-outline border-primary-200 justify-start !grow shrink-0 lg:w-full text-sm !text-gray-500 dark:!text-white hover:!text-primary hover:!bg-primary-200 dark:hover:!bg-dark-icon [&.active]:bg-primary-200 dark:[&.active]:bg-dark-icon [&.active]:border-transparent [&.active]:!text-primary dk-theme-card-square ac-transition"
                     onclick="openStep(event, 'openai-setting')">
                     <i class="ri-sparkling-2-line text-inherit"></i>
                     {{ translate('Ai Setting') }}
-                </button>
+                </button> -->
 
-                <button
+                <!-- <button
                     class="tablinks btn b-outline btn-primary-outline border-primary-200 justify-start !grow shrink-0 lg:w-full text-sm !text-gray-500 dark:!text-white hover:!text-primary hover:!bg-primary-200 dark:hover:!bg-dark-icon [&.active]:bg-primary-200 dark:[&.active]:bg-dark-icon [&.active]:border-transparent [&.active]:!text-primary dk-theme-card-square ac-transition"
                     onclick="openStep(event, 'system-information')">
                     <i class="ri-information-2-line text-inherit"></i>
                     {{ translate('System Information') }}
-                </button>
+                </button> -->
             </div>
         </div>
 

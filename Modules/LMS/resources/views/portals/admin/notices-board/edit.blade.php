@@ -33,10 +33,10 @@
                                 {{ $notice->type == 'student-instructor' ? 'selected' : '' }}>
                                 {{ translate('Students and Instructors') }}
                             </option>
-                            <option value="organization"
+                            <!-- <option value="organization"
                                 {{ isset($notice) && $notice->type == 'organization' ? 'selected' : '' }}>
                                 {{ translate('Organization') }}
-                            </option>
+                            </option> -->
                         </select>
                         <span class="text-danger error-text type_err"></span>
                     </div>

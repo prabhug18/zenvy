@@ -104,7 +104,7 @@
             </div>
         </div>
         <!-- Total Organization Card -->
-        <div class="col-span-full md:col-span-4 lg:col-span-3 p-4 dk-border-one rounded-xl h-full dk-theme-card-square">
+        <!-- <div class="col-span-full md:col-span-4 lg:col-span-3 p-4 dk-border-one rounded-xl h-full dk-theme-card-square">
             <div class="flex-center-between">
                 <h6 class="leading-none text-gray-500 dark:text-dark-text font-semibold">
                     {{ translate('Total organization') }}
@@ -120,7 +120,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Total Student Card -->
         <div class="col-span-full md:col-span-4 lg:col-span-3 p-4 dk-border-one rounded-xl h-full dk-theme-card-square">
             <div class="flex-center-between">

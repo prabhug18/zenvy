@@ -23,6 +23,7 @@ use Modules\LMS\Http\Controllers\Admin\Review\ReviewController;
 use Modules\LMS\Http\Controllers\Admin\Slider\SliderController;
 use Modules\LMS\Http\Controllers\Admin\Courses\CourseController;
 use Modules\LMS\Http\Controllers\Admin\Financial\SaleController;
+use Modules\LMS\Http\Controllers\Admin\Financial\OfflineSaleController;
 use Modules\LMS\Http\Controllers\Admin\Forum\SubForumController;
 use Modules\LMS\Http\Controllers\Admin\Contact\ContactController;
 use Modules\LMS\Http\Controllers\Admin\Courses\ChapterController;
@@ -243,6 +244,7 @@ Route::group(
             ['prefix' => 'financial'],
             function () {
                 Route::get('sale', [SaleController::class, 'index'])->name('sale.index');
+                Route::get('offline-sale', [OfflineSaleController::class, 'index'])->name('offline-sale.index');
                 Route::get('payout-request', [PayoutController::class, 'index'])->name('request.payout');
                 Route::get('payout/status-change/{id}', [PayoutController::class, 'statusChange'])->name('payout.status');
                 Route::get('invoice/{id}', [SaleController::class, 'invoice'])->name('sale.invoice');
@@ -347,6 +349,7 @@ Route::group(
         /**   Method Method **/
         Route::resource('payment-method', PaymentMethodController::class);
         Route::get('payment/status-change/{id}',  [PaymentMethodController::class, 'statusChange'])->name('payment.status');
+        Route::get('certificate/preview/{id}', [CertificateController::class, 'preview'])->name('certificate.preview');
         Route::resource('certificate', CertificateController::class);
         Route::resource('faq', FaqController::class);
         Route::resource('page', PageController::class)->only('index', 'edit', 'update');
@@ -359,6 +362,7 @@ Route::group(
         Route::put('slider/restore/{id}', [SliderController::class, 'restore'])->name('slider.restore');
         Route::group(['prefix' => 'review'],  function () {
             Route::resource('course-review', ReviewController::class);
+            Route::post('course-review/{id}/status', [ReviewController::class, 'statusUpdate'])->name('course-review.status');
         });
         Route::post('generate/completions', [OpenaiController::class, 'generate'])->name('generate.content');
     }

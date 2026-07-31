@@ -74,6 +74,10 @@
 
                     <div class="flex flex-col gap-5">
                         @foreach ($permissions as $key => $permission)
+                            @if (in_array(strtolower($key), ['organization', 'bundle', 'faq']))
+                                {{-- Hidden Organization, Bundle, and FAQ checkbox groups --}}
+                                @continue
+                            @endif
                             <div class="group-permission">
                                 <div class="flex items-center gap-2 mb-2">
                                     <input id="check-s-{{ $key }}" type="checkbox"
