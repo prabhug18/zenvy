@@ -1,14 +1,13 @@
-/.phpunit.cache
 /node_modules
-public/build
-public/hot
-Modules/LMS/storage
-public/storage
+/public/build
+/public/hot
+/public/storage
 /storage/*.key
 /vendor
 .env
 .env.backup
 .env.production
+.env.testing
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
@@ -18,8 +17,40 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-public/lms/assets/css/output.min.css
-# public/lms/frontend/assets/css/output.min.css
-*.zip
-/public/demo.sql
+/.phpunit.cache
+
+# Logs
+*.log
+
+# Temporary and Local Scratch Files
+db_output.json
+tmp_logs.txt
+
+# Laravel Cache and Storage
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+/storage/app/public/*
+!/storage/app/public/.gitignore
+/storage/debugbar/*
+!/storage/debugbar/.gitignore
+/storage/framework/cache/*
+!/storage/framework/cache/.gitignore
+/storage/framework/cache/data/*
+!/storage/framework/cache/data/.gitignore
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitignore
+/storage/framework/views/*
+!/storage/framework/views/.gitignore
+/storage/framework/testing/*
+!/storage/framework/testing/.gitignore
+/storage/logs/*
+!/storage/logs/.gitignore
+
+# Module & Theme specific
+Modules/LMS/storage
 /Modules/LMS/storage
+public/lms/assets/css/output.min.css
+/public/demo.sql
+*.zip
+.DS_Store
+Thumbs.db
