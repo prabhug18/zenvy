@@ -8,7 +8,13 @@
 <x-dashboard-layout>
     <x-slot:title> {{ translate('Manage Student') }} </x-slot:title>
     <!-- Page Breadcrumb -->
-    <x-portal::admin.breadcrumb title="All Student" page-to="Student" action-route="{{ route('student.create') }}" />
+    <x-portal::admin.breadcrumb title="All Student" page-to="Student" action-route="{{ route('student.create') }}">
+        <a href="{{ route('student.export', request()->query()) }}"
+            class="btn b-solid btn-success-solid btn-sm dk-theme-card-square flex items-center gap-2">
+            <i class="ri-file-excel-2-line text-inherit text-[16px]"></i>
+            {{ translate('Export Excel') }}
+        </a>
+    </x-portal::admin.breadcrumb>
 
 
     <div class="card">

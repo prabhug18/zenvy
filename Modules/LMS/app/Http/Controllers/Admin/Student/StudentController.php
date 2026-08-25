@@ -41,6 +41,90 @@ class StudentController extends Controller
         return view('portal::admin.student.index', compact('students', 'reports', 'countData'));
     }
 
+    /**
+     * Export student details to Excel/CSV.
+     */
+    public function export(Request $request)
+    {
+        $students = $this->user->getStudentsForExport($request);
+
+        $fileName = 'students_list_' . date('Y-m-d_H-i-s') . '.csv';
+
+        $headers = [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => "attachment; filename=\"{$fileName}\"",
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0',
+        ];
+
+        $callback = function () use ($students) {
+            $file = fopen('php://output', 'w');
+
+            // Add UTF-8 BOM for Microsoft Excel compatibility
+            fwrite($file, "\xEF\xBB\xBF");
+
+            // Header row with requested columns:
+            // a) Student name, b) Email, c) Phone, d) Course name enrolled
+            fputcsv($file, [
+                'Student Name',
+                'Email',
+                'Phone',
+                'Course Name Enrolled',
+            ]);
+
+            foreach ($students as $student) {
+                $userInfo = $student?->userable;
+                $userableTranslations = [];
+                if ($userInfo) {
+                    $userableTranslations = parse_translation($userInfo);
+                }
+
+                $firstName = $userableTranslations['first_name'] ?? $userInfo?->first_name ?? '';
+                $lastName = $userableTranslations['last_name'] ?? $userInfo?->last_name ?? '';
+                $studentName = trim($firstName . ' ' . $lastName);
+                if (empty($studentName)) {
+                    $studentName = $student->username ?? 'N/A';
+                }
+
+                $email = $student->email ?? '';
+                $phone = $userInfo?->phone ?? '';
+
+                $enrolledCourses = [];
+                if ($student->enrollments) {
+                    foreach ($student->enrollments as $enrollment) {
+                        if ($enrollment->course) {
+                            $courseTranslations = parse_translation($enrollment->course);
+                            $courseTitle = $courseTranslations['title'] ?? $enrollment->course->title ?? '';
+                            if (!empty($courseTitle)) {
+                                $enrolledCourses[] = $courseTitle;
+                            }
+                        } elseif ($enrollment->courseBundle) {
+                            $bundleTranslations = parse_translation($enrollment->courseBundle);
+                            $bundleTitle = $bundleTranslations['title'] ?? $enrollment->courseBundle->title ?? '';
+                            if (!empty($bundleTitle)) {
+                                $enrolledCourses[] = $bundleTitle;
+                            }
+                        }
+                    }
+                }
+
+                $courseNames = !empty($enrolledCourses) ? implode(', ', array_unique($enrolledCourses)) : 'N/A';
+
+                fputcsv($file, [
+                    $studentName,
+                    $email,
+                    $phone,
+                    $courseNames,
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
 
     
 

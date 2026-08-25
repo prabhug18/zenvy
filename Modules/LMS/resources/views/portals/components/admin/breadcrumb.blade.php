@@ -49,16 +49,18 @@
                     @endif
                 </ul>
             </div>
-            @if (isset($actionRoute))
+            @if (isset($actionRoute) || (isset($slot) && !empty(trim($slot))))
                 <div class="flex items-center gap-3">
-                    <a href="{{ $actionRoute ?? '#' }}"
-                        class="btn b-outline btn-primary-outline btn-sm dk-theme-card-square">
-                        <i class="ri-add-line text-inherit"></i>
-                        {{ translate('Add new') }}
-                    </a>
+                    {{ $slot ?? '' }}
+                    @if (isset($actionRoute))
+                        <a href="{{ $actionRoute ?? '#' }}"
+                            class="btn b-outline btn-primary-outline btn-sm dk-theme-card-square">
+                            <i class="ri-add-line text-inherit"></i>
+                            {{ translate('Add new') }}
+                        </a>
+                    @endif
                 </div>
             @endif
-            {{ $slot ?? '' }}
         </div>
     </div>
 </div>

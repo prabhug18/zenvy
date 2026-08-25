@@ -160,6 +160,83 @@ class UserRepository  extends BaseRepository
     }
 
     /**
+     * Method getStudentsForExport
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getStudentsForExport($request)
+    {
+        $options = [];
+        $filterType = '';
+        if ($request->has('filter')) {
+            $filterType = $request->filter ?? '';
+        }
+        switch ($filterType) {
+            case 'trash':
+                $options['onlyTrashed'] = [];
+                break;
+            case 'all':
+                $options['withTrashed'] = [];
+                break;
+        }
+        $users = static::$model::query();
+
+        if (!is_array($options)) {
+            $options = array($options);
+        }
+        foreach ($options as $option => $value) {
+            if (is_array($value)) {
+                $users->{$option}(...$value);
+            } else {
+                $users->{$option}($value);
+            }
+        }
+
+        $optionsList = ['guard' => 'student'];
+        if (! empty($request->verify) && $request->verify != 'all') {
+            $verify = $request->verify == 'verified' ? 1 : 0;
+            $users->where('is_verify', $verify);
+        }
+        if (! empty($request->status) && $request->status != 'all') {
+            $status = $request->status == 'active' ? 1 : 0;
+            $users->withWhereHas(
+                'userable',
+                function ($query) use ($status) {
+                    $query->where('status', $status);
+                }
+            );
+        }
+        if (! empty($request->name_search)) {
+            $users->whereHasMorph(
+                'userable',
+                [Student::class],
+                function ($query) use ($request) {
+                    $query->whereAny(['first_name', 'last_name'], 'LIKE', '%' . $request->name_search . '%');
+                }
+            );
+        }
+
+        $locale = app()->getLocale();
+        $users->with([
+            'userable',
+            'userable.translations' => function ($query) use ($locale) {
+                $query->where('locale', $locale);
+            },
+            'enrollments.course.translations' => function ($query) use ($locale) {
+                $query->where('locale', $locale);
+            },
+            'enrollments.courseBundle.translations' => function ($query) use ($locale) {
+                $query->where('locale', $locale);
+            },
+        ]);
+
+        return $users->where($optionsList)
+            ->latest()
+            ->get();
+    }
+
+    /**
      * getUserByGuard
      *
      * @param  string  $guard

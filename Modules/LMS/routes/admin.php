@@ -208,6 +208,7 @@ Route::group(
         Route::resource('meet-provider', MeetProviderController::class);
 
         /** student **/
+        Route::get('students/export', [StudentController::class, 'export'])->name('student.export');
         Route::resource('students', StudentController::class)->names('student');
         Route::get('students/profile/{id}', [StudentController::class, 'profile'])->name('student.profile');
         Route::get('students/status-change/{id}', [StudentController::class, 'statusChange'])->name('student.status');
