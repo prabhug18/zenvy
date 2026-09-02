@@ -16,14 +16,12 @@ class CertificateSeeder extends Seeder
         $data = [
             [
                 'title' =>  'Frontend Development',
-                'certificate_content' => '<div class="certificate-template-container" id="certificateImg" style="background: url("http://127.0.0.1:8000/lms/assets/images/certificate-template.jpg"); background-repeat:no-repeat; background-size: 100% 100% ">
-                            <div data-name="student" class="dragable-element ui-draggable ui-draggable-handle" style="left: 294px; top: 486px;">{student_name}</div>
-                            <div data-name="platform-name" class="dragable-element ui-draggable ui-draggable-handle" style="left: -138px; top: 656px;">{platform_name}</div>
-                            <div data-name="course-completed-date" class="dragable-element ui-draggable ui-draggable-handle" style="left: 51px; top: 330px;">{course_title}</div>
-                            <div data-name="course-completed-date" class="dragable-element ui-draggable ui-draggable-handle" style="left: -108px; top: 287px;">
-                                {course_completed_date} </div>
-                            <div data-name="course-completed-date" class="dragable-element ui-draggable ui-draggable-handle" style="left: 19px; top: 652px;">{instructor_name}
-                            </div>
+                'certificate_content' => '<div class="certificate-template-container" id="certificateImg" style="background-image: url(\'http://127.0.0.1:8000/lms/assets/images/certificate-template.jpg\'); background-repeat: no-repeat; background-size: 100% 100%;">
+                            <div data-name="student" class="dragable-element ui-draggable ui-draggable-handle" style="left: 440px; top: 422px;">{student_name}</div>
+                            <div data-name="course-title" class="dragable-element ui-draggable ui-draggable-handle" style="left: 440px; top: 472px;">{course_title}</div>
+                            <div data-name="course-completed-date" class="dragable-element ui-draggable ui-draggable-handle" style="left: 545px; top: 522px;">{course_completed_date}</div>
+                            <div data-name="instructor-name" class="dragable-element ui-draggable ui-draggable-handle" style="left: 284px; top: 645px;">{instructor_name}</div>
+                            <div data-name="platform-name" class="dragable-element ui-draggable ui-draggable-handle" style="left: 450px; top: 745px;">{platform_name}</div>
                         </div>',
                 'input_content' => '{"bg":null,"title":{"color":"#000000","font_size":"18"}}',
                 'type'  =>  'course',

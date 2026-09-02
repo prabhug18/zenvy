@@ -2,7 +2,8 @@
     <x-slot:title>{{ isset($certificate) ? translate('Edit') : translate('Create') }}
         {{ translate('Cerficate') }} </x-slot:title>
     <!-- BREADCRUMB -->
-    <x-portal::admin.breadcrumb title="{{ isset($certificate) ? 'Edit' : 'Create' }} Certificate" page-to="Certificate" />
+    <x-portal::admin.breadcrumb title="{{ isset($certificate) ? 'Edit' : 'Create' }} Certificate"
+        page-to="Certificate" />
     <div class="overflow-x-auto scrollbar-table">
         @php
             $inputContent = $certificate->input_content ?? null;
@@ -79,14 +80,15 @@
                                 value="{{ isset($certificate) ? $inputContent['title']['color'] ?? null : '' }}"
                                 class="dragable-element-control dragable-element-color border-none outline-0 bg-transparent size-[30px]">
                             <div class="color-value font-semibold text-gray-500 dark:text-dark-text uppercase">
-                                {{ isset($certificate) ? $inputContent['title']['color'] ?? null : '' }}</div>
+                                {{ isset($certificate) ? $inputContent['title']['color'] ?? null : '' }}
+                            </div>
                         </div>
                     </div>
                     <div class="form-group mt-6 hidden">
                         <label for="courseTitle" class="form-label">{{ translate('Title Font Size') }}</span></label>
                         <input type="number" name="item[title][font_size]"
-                            value="{{ isset($certificate) ? $inputContent['title']['font_size'] ?? 18 : 18 }}"
-                            min="5" class="form-input dragable-element-control dragable-element-size">
+                            value="{{ isset($certificate) ? $inputContent['title']['font_size'] ?? 18 : 18 }}" min="5"
+                            class="form-input dragable-element-control dragable-element-size">
                     </div>
                 </div>
             </div>
@@ -97,6 +99,29 @@
             </div>
         </form>
     </div>
+    @push('css')
+        <style>
+            .certificate-template-container {
+                position: relative !important;
+                width: 1056px !important;
+                height: 816px !important;
+                overflow: hidden !important;
+                text-align: left !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                background-size: 100% 100% !important;
+                background-repeat: no-repeat !important;
+            }
+            .dragable-element {
+                position: absolute !important;
+                display: inline-block !important;
+                white-space: nowrap !important;
+                text-align: left !important;
+                line-height: 1 !important;
+                cursor: move !important;
+            }
+        </style>
+    @endpush
     @push('js')
         <script src="{{ asset('lms/assets/js/vendor/jquery-ui.min.js') }}"></script>
         <script src="{{ edulab_asset('lms/assets/js/component/certificate.js') }}"></script>

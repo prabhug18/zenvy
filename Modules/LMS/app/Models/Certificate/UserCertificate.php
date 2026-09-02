@@ -13,4 +13,8 @@ class UserCertificate extends Model
      * The attributes that are mass assignable.
      */
     protected $guarded = ['id'];
+
+    protected $casts = [
+        'certificate_data' => 'array',
+    ];
 }

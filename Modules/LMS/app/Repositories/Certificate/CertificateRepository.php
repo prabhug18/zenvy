@@ -73,6 +73,14 @@ class CertificateRepository extends BaseRepository
         $platformName = $setting['app_name'] ?? config('app.name');
         $date = customDateFormate($exam->updated_at, format: 'd-m-Y');
         $content =  str_replace(['{student_name}', '{platform_name}', '{course_title}', '{instructor_name}', '{course_completed_date}'], [$studentName, $platformName, $courseTitle,   $instructorName, $date], $certificate->certificate_content);
+        $dataPayload = [
+            'student_name' => $studentName,
+            'course_title' => $courseTitle,
+            'instructor_name' => $instructorName,
+            'course_completed_date' => $date,
+            'platform_name' => $platformName,
+        ];
+
         UserCertificate::updateOrCreate(
             ['quiz_id' => $id, 'user_id' => authCheck()->id],
             [
@@ -81,6 +89,7 @@ class CertificateRepository extends BaseRepository
                 'subject' => $courseTitle,
                 'certificated_date' => now(),
                 'certificate_content'  => $content,
+                'certificate_data' => $dataPayload,
             ]
         );
     }

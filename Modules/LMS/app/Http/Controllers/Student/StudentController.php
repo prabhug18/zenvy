@@ -107,6 +107,32 @@ class StudentController extends Controller
     public function certificateDownload($id)
     {
         $certificate = UserCertificate::where(['user_id' => authCheck()->id, 'id' => $id])->first();
+        if ($certificate) {
+            $masterTemplate = Certificate::first();
+            if ($masterTemplate && !empty($masterTemplate->certificate_content)) {
+                $data = $certificate->certificate_data;
+                $studentName = $data['student_name'] ?? '';
+                $platformName = $data['platform_name'] ?? '';
+                $courseTitle = $data['course_title'] ?? $certificate->subject ?? '';
+                $instructorName = $data['instructor_name'] ?? '';
+                $date = $data['course_completed_date'] ?? customDateFormate($certificate->certificated_date, format: 'd-m-Y');
+
+                if (empty($studentName)) {
+                    $u = authCheck()->userable ?? null;
+                    $studentName = trim(($u->first_name ?? '') . ' ' . ($u->last_name ?? ''));
+                }
+                if (empty($platformName)) {
+                    $setting = get_theme_option('backend_setting') ?? [];
+                    $platformName = $setting['app_name'] ?? config('app.name');
+                }
+
+                $certificate->certificate_content = str_replace(
+                    ['{student_name}', '{platform_name}', '{course_title}', '{instructor_name}', '{course_completed_date}'],
+                    [$studentName, $platformName, $courseTitle, $instructorName, $date],
+                    $masterTemplate->certificate_content
+                );
+            }
+        }
         return view('portal::certificate.download', compact('certificate'));
     }
 

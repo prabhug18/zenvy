@@ -335,9 +335,9 @@
                                 .val(data.image_name);
 
                             if (type != undefined) {
-                                $("#certificateImg").css(
-                                    "background-image",
-                                    "url(" + data.path + ")"
+                                $("#certificateImg").attr(
+                                    "style",
+                                    "background-image: url('" + data.path + "'); background-repeat: no-repeat; background-size: 100% 100%;"
                                 );
                             }
                         }

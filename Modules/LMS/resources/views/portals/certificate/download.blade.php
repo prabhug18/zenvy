@@ -14,6 +14,24 @@
 
     @push('css')
     <style>
+        .certificate-template-container {
+            position: relative !important;
+            width: 1056px !important;
+            height: 816px !important;
+            overflow: hidden !important;
+            text-align: left !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            background-size: 100% 100% !important;
+            background-repeat: no-repeat !important;
+        }
+        .dragable-element {
+            position: absolute !important;
+            display: inline-block !important;
+            white-space: nowrap !important;
+            text-align: left !important;
+            line-height: 1 !important;
+        }
         @media print {
             body {
                 background: white !important;
