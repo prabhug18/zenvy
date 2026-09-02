@@ -263,13 +263,6 @@ circleRating.forEach(function (elm) {
     elm.setAttribute("stroke-dasharray", dashValue);
 });
 
-if (start == true) {
-    document.addEventListener("visibilitychange", function () {
-        if (document.hidden) {
-            $("#final-submit").submit();
-        }
-    });
-}
 
 // LAZY IMAGE LOADER
 const observer = lozad(

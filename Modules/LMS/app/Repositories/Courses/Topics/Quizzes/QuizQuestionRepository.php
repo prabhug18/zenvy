@@ -136,8 +136,10 @@ class QuizQuestionRepository extends BaseRepository
         if (! empty($answers)) {
             QuestionAnswer::where('quiz_question_id', $questionId)->delete();
             if ($questionType == QuestionTypes::FILL_IN_BLANK) {
-                $answers = implode(',', $answers);
-                $answers = array_filter(array_map('trim', explode(',', $answers)));
+                if (is_array($answers)) {
+                    $answers = implode(',', $answers);
+                }
+                $answers = array_filter(array_map('trim', explode(',', (string) $answers)));
                 foreach ($answers as $answer) {
                     if ($answer !== '') {
                         QuestionAnswer::create(
