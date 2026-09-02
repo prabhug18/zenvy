@@ -140,49 +140,6 @@
 
 
        <script>
-           //===================== quiz type list
-
-           $(document).on('change', '.quiz-type-list', function() {
-
-               let ansList = $(".answer-list-area").html("");
-               let quizType = $(this).val();
-               if (quizType == "multiple-choice" || quizType == 'single-choice') {
-                   $(ansList).html(`<div class="mt-10">
-                    <button type="button" class="btn b-solid btn-primary-solid addQuizAns" data-quiztype="${quizType}"> {{ translate('Add Answer') }} </button>
-                    <ul class="flex flex-col gap-2 mt-5 quiz-ans-container" data-length="1">
-                        <li class="border border-input-border rounded-lg p-2 removeable-parent">
-                            <div class="flex gap-2 relative">
-                                <textarea name="answers[0][name]" placeholder="{{ translate('Option') }}" id="searchInput" data-search-type="answer" class="form-input search-suggestion" rows="1"></textarea>
-
-                                <button type="button"
-                                    class="btn b-outline btn-danger-outline btn-sm max-h-10 remove-parent-button">
-                                    <i class="ri-close-line text-inherit text-[13px]"></i>
-                                </button>
-                                <div class="search-show"></div>
-                            </div>
-                            <div class="leading-none flex items-center gap-2 mt-2">
-                                <label for="correntans1" class="inline-flex items-center cursor-pointer">
-                                    ${ quizType == "multiple-choice" ? '<input type="checkbox" id="correntans1" name="answers[0][correct]" class="appearance-none peer"> <div class="switcher switcher-primary-solid"></div>' : '<input type="radio"   id="correntans1" name="answers[0][correct]" class="radio radio-primary question-type-single">' }
-
-                                </label>
-                                <div class="text-gray-500 dark:text-dark-text font-medium inline-block">Check if this is
-                                    Correct</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>`)
-               } else if (quizType == "fill-in-blank") {
-                   $(ansList).html(`
-                <div class="mt-10 mb-11">
-                    <label for="quiz-grade" class="form-label"> {{ translate('Select the word in your question you want to appear in blank') }} (_______).
-                    </label>
-                    <input type="text" class="form-input choices-input" name="answers[]" >
-                </div>`)
-                   choicesInput()
-               }
-
-           })
-
            setTimeout(() => {
                $(".singleSelect2").select2({
                    width: "100%",
@@ -190,23 +147,24 @@
            }, 50);
        </script>
    @else
-       <div class="pb-4 border-b border-gray-200">
-           <h6 class="leading-none text-lg font-semibold text-heading"> {{ translate('Question') }} </h6>
-       </div>
-       <ul class="*:leading-none *:p-3 *:rounded-10 *:border *:border-input-border space-y-5 mt-10" id="questionList">
-           @if (isset($quizQuestions) && !empty($quizQuestions))
-               @foreach ($quizQuestions as $quizQuestion)
-                   <li class="flex-center-between cursor-move question-item" data-item-id="{{ $quizQuestion->id }}">
-                       <div class="flex items-center gap-2.5">
-                           <div class="size-8 rounded-50 bg-primary-100 flex-center">
-                               <i class="ri-question-mark text-[14px] text-inherit"></i>
-                           </div>
-                           <b>{{ ucfirst($quizQuestion->question_type) }} :</b>
-                           <h6 class="text-gray-500 dark:text-dark-text text-lg font-medium">
-                               <span class="text-gray-900 font-normal">
-                                   {{ $quizQuestion?->question?->name }}
-                           </h6>
-                       </div>
+        <div class="pb-4 border-b border-gray-200 dark:border-dark-border">
+            <h6 class="leading-none text-lg font-semibold text-heading"> {{ translate('Question') }} </h6>
+        </div>
+        <ul class="*:leading-none *:p-3 *:rounded-10 *:border *:border-input-border space-y-5 mt-10" id="questionList">
+            @if (isset($quizQuestions) && !empty($quizQuestions))
+                @foreach ($quizQuestions as $quizQuestion)
+                    <li class="flex-center-between cursor-move question-item" data-item-id="{{ $quizQuestion->id }}">
+                        <div class="flex items-center gap-2.5">
+                            <div class="size-8 rounded-50 bg-primary-100 flex-center">
+                                <i class="ri-question-mark text-[14px] text-inherit"></i>
+                            </div>
+                            <b>{{ ucfirst($quizQuestion->question_type) }} :</b>
+                            <h6 class="text-gray-500 dark:text-dark-text text-lg font-medium">
+                                <span class="text-gray-900 dark:text-dark-text font-normal">
+                                    {{ $quizQuestion?->question?->name }}
+                                </span>
+                            </h6>
+                        </div>
                        <div class="flex items-center gap-1.5">
                            <!-- Edit Question -->
                            <button type="button" class="btn-icon size-8 btn-primary-icon-light edit-question"
@@ -228,6 +186,8 @@
        <script>
            new Sortable(questionList, {
                animation: 150,
+               scroll: false,
+               bubbleScroll: false,
                onSort: function(ui) {
                    let item = $(ui.from).find('.question-item')
                    let itemIds = [];

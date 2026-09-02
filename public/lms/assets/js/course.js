@@ -340,20 +340,35 @@ $(function () {
 
     $(document).on("click", ".add-question", function () {
         let quizId = $(this).data("id");
-        $("#quizId").val(quizId);
-        $(".answer-list-area").html("");
+        let modal = $("#editQuiz");
+        modal.find("#quizId").val(quizId);
+        let form = modal.find("form")[0];
+        if (form) {
+            form.reset();
+        }
+        modal.find("#quizId").val(quizId);
+        modal.find(".quiz-type-list").val("").trigger("change");
+        modal.find(".answer-list-area").html("");
+        modal.find(".error-text").text("");
+        modal.find(".search-show").html("");
     });
 
     $(document).on("change", ".quiz-type-list", function () {
-        let ansList = $(".answer-list-area").html("");
+        let ansList = $(this).closest("form").find(".answer-list-area");
+        ansList.html("");
         let quizType = $(this).val();
+        let addAnswerText = (typeof addAnswer !== 'undefined' && addAnswer) ? addAnswer : 'Add Answer';
+        let answerOptionText = (typeof answerOption !== 'undefined' && answerOption) ? answerOption : 'Option';
+        let checkIfCorrectText = (typeof checkIfCorrect !== 'undefined' && checkIfCorrect) ? checkIfCorrect : 'Check if this is Correct';
+        let writeWordText = (typeof writeCorrectWord !== 'undefined' && writeCorrectWord) ? writeCorrectWord : 'Enter the correct answer for blank';
+
         if (quizType == "multiple-choice" || quizType == "single-choice") {
-            $(ansList).html(`<div class="mt-10">
-                <button type="button" class="btn b-solid btn-primary-solid addQuizAns" data-quiztype="${quizType}">${addAnswer}</button>
+            ansList.html(`<div class="mt-10">
+                <button type="button" class="btn b-solid btn-primary-solid addQuizAns" data-quiztype="${quizType}">${addAnswerText}</button>
                 <ul class="flex flex-col gap-2 mt-5 quiz-ans-container" data-length="1">
                     <li class="border border-input-border rounded-lg p-2 removeable-parent">
                         <div class="flex gap-2 relative">
-                            <textarea name="answers[0][name]" placeholder="${answerOption}" id="searchInput" data-search-type="answer" class="form-input search-suggestion" rows="1"></textarea>
+                            <textarea name="answers[0][name]" placeholder="${answerOptionText}" id="searchInput" data-search-type="answer" class="form-input search-suggestion" rows="1"></textarea>
                             
                             <button type="button"
                                 class="btn b-outline btn-danger-outline btn-sm max-h-10 remove-parent-button">
@@ -370,18 +385,18 @@ $(function () {
                                 }
                             
                             </label>
-                            <div class="text-gray-500 dark:text-dark-text font-medium inline-block">${checkIfCorrect}</div>
+                            <div class="text-gray-500 dark:text-dark-text font-medium inline-block">${checkIfCorrectText}</div>
                         </div>
                     </li>
                 </ul>
             </div>`);
         } else if (quizType == "fill-in-blank") {
-            $(ansList).html(`
+            ansList.html(`
             <div class="mt-10 mb-11">
-                <label for="fill-blank-answer" class="form-label">${writeCorrectWord} (_______).</label>
+                <label for="fill-blank-answer" class="form-label">${writeWordText} (_______).</label>
                 <input type="text" id="fill-blank-answer" name="answers[]" class="form-input"
                     placeholder="e.g. apple (use commas for multiple: apple, orange)">
-                <small class="text-gray-400 mt-1.5 block text-sm">Separate multiple correct answers with commas.</small>
+                <small class="text-gray-400 dark:text-dark-text mt-1.5 block text-sm">Separate multiple correct answers with commas.</small>
             </div>`);
         }
     });
@@ -390,12 +405,16 @@ $(function () {
 
     $(document).on("click", ".addQuizAns", function () {
         let quiztype = $(this).data("quiztype");
-        let index = $(this).parent().find(".quiz-ans-container").data("length");
+        let container = $(this).closest("form").find(".quiz-ans-container");
+        let index = container.data("length") || 0;
         index++;
-        $(".quiz-ans-container").append(`
+        let answerOptionText = (typeof answerOption !== 'undefined' && answerOption) ? answerOption : 'Option';
+        let checkIfCorrectText = (typeof checkIfCorrect !== 'undefined' && checkIfCorrect) ? checkIfCorrect : 'Check if this is Correct';
+
+        container.append(`
             <li class="border border-input-border rounded-lg p-2 removeable-parent">
                 <div class="flex gap-2 relative">
-                    <textarea name="answers[${index}][name]" placeholder="${answerOption}" id="searchInput" data-search-type="answer" class="form-input search-suggestion" rows="1"></textarea>
+                    <textarea name="answers[${index}][name]" placeholder="${answerOptionText}" id="searchInput" data-search-type="answer" class="form-input search-suggestion" rows="1"></textarea>
                     <button type="button"
                         class="btn b-outline btn-danger-outline btn-sm max-h-10 remove-parent-button">
                         <i class="ri-close-line text-inherit text-[13px]"></i>
@@ -410,11 +429,11 @@ $(function () {
                                 : `<input type="radio" id="correntans${index}" name="answers[${index}][correct]" class="radio radio-primary question-type-single">`
                         }
                     </label>
-                    <div class="text-gray-500 dark:text-dark-text font-medium inline-block">Check if this is Correct</div>
+                    <div class="text-gray-500 dark:text-dark-text font-medium inline-block">${checkIfCorrectText}</div>
                 </div>
             </li>
          `);
-        $(this).parent().find(".quiz-ans-container").data("length", index);
+        container.data("length", index);
     });
 
     //======================= choices js

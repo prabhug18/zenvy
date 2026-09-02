@@ -21,15 +21,6 @@
                 <h6 class="text-xl font-semibold text-heading">{{ translate('Course Settings Options') }}</h6>
                 <div class="mt-10">
                     <div class="leading-none flex items-center gap-4 mb-10">
-                        <label for="support" class="inline-flex items-center me-5 cursor-pointer">
-                            <input type="checkbox" id="support" name="has_support" class="appearance-none peer"
-                                {{ isset($course) && $course?->courseSetting?->has_support == 1 ? 'checked' : '' }}>
-                            <div class="switcher switcher-primary-solid"></div>
-                        </label>
-                        <div class="text-gray-500 dark:text-dark-text font-medium inline-block">
-                            {{ translate('Has Support') }}</div>
-                    </div>
-                    <div class="leading-none flex items-center gap-4 mb-10">
                         <label for="certificate" class="inline-flex items-center me-5 cursor-pointer">
                             <input type="checkbox" id="certificate" name="is_certificate" class="appearance-none peer"
                                 {{ isset($course) && $course?->courseSetting?->is_certificate == 1 ? 'checked' : '' }}>
@@ -56,25 +47,6 @@
                         </label>
                         <div class="text-gray-500 dark:text-dark-text font-medium inline-block">
                             {{ translate('Is Free Course') }}</div>
-                    </div>
-                    <div class="leading-none flex items-center gap-4 mb-10">
-                        <label for="live" class="inline-flex items-center me-5 cursor-pointer">
-                            <input type="checkbox" id="live" class="appearance-none peer" name="is_live"
-                                {{ isset($course) && $course?->courseSetting?->is_live == 1 ? 'checked' : '' }}>
-                            <div class="switcher switcher-primary-solid"></div>
-                        </label>
-                        <div class="text-gray-500 dark:text-dark-text font-medium inline-block">
-                            {{ translate('Is Live') }}</div>
-                    </div>
-
-                    <div class="leading-none flex items-center gap-4 mb-10">
-                        <label for="is_subscription" class="inline-flex items-center me-5 cursor-pointer">
-                            <input type="checkbox" id="is_subscription" class="appearance-none peer" name="is_subscription"
-                                {{ isset($course) && $course?->courseSetting?->is_subscription == 1 ? 'checked' : '' }}>
-                            <div class="switcher switcher-primary-solid"></div>
-                        </label>
-                        <div class="text-gray-500 dark:text-dark-text font-medium inline-block">
-                            {{ translate('Subscription') }}</div>
                     </div>
                 </div>
             </div>
