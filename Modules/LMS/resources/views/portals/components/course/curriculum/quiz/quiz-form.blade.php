@@ -1,13 +1,13 @@
     <!-- Start Edit Quiz Modal -->
     <div id="editQuiz" tabindex="-1"
-        class="fixed inset-0 z-modal flex-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full hidden overflow-y-auto overflow-x-hidden p-4">
-        <div class="relative w-full max-w-2xl my-auto" style="max-height: 90vh;">
-            <div class="relative bg-white dark:bg-dark-card-two rounded-lg dk-theme-card-square shadow overflow-hidden flex flex-col" style="max-height: 85vh;">
+        class="fixed inset-0 z-modal flex items-center justify-center w-full h-full hidden overflow-y-auto overflow-x-hidden p-4">
+        <div class="relative w-full max-w-2xl my-auto">
+            <div class="relative bg-white dark:bg-dark-card-two rounded-lg dk-theme-card-square shadow">
                 <button type="button" data-modal-hide="editQuiz"
                     class="absolute top-3 end-2.5 z-10 hover:bg-gray-200 dark:hover:bg-dark-icon rounded-lg size-8 flex-center">
                     <i class="ri-close-fill text-gray-500 dark:text-dark-text text-xl leading-none"></i>
                 </button>
-                <div class="p-4 md:p-5 overflow-y-auto overscroll-contain" style="max-height: 85vh; overflow-y: auto;">
+                <div class="p-4 md:p-6 overflow-y-auto" style="max-height: 80vh; overflow-y: auto;">
                     <div class="pb-4 border-b border-gray-200 dark:border-dark-border">
                         <h6 class="leading-none text-lg font-semibold text-heading">{{ translate('Add Question') }}</h6>
                     </div>
