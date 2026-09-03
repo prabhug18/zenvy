@@ -26,120 +26,113 @@
             {{ translate('Edit Question') }}
         </h6>
     </div>
-    <form action="{{ route($questionStore) }}" class="flex flex-col gap-10 mt-6 form" method="POST">
+    <form action="{{ route($questionStore) }}" class="flex flex-col gap-4 mt-6 form" method="POST">
         @csrf
         <input type="hidden" name="id" value="{{ $quizQuestion->id }}">
         <input type="hidden" name="quiz_id" value="{{ $quizQuestion?->quiz_id }}">
-        <div class="max-h-[80vh] overflow-auto">
-            <div class="overflow-hidden">
-                <div class="relative">
-                    <label for="quiz-question" class="form-label">{{ translate('Question Title') }}</label>
-                    <textarea name="title" rows="1" id="searchInput" data-search-type="question"
-                        class="form-input search-suggestion"> {!! $quizQuestion?->question?->name !!} </textarea>
-                    <div class="search-show"></div>
-                    <span class="text-danger error-text title_err"></span>
+        <div class="relative">
+            <label for="quiz-question" class="form-label">{{ translate('Question Title') }}</label>
+            <textarea name="title" rows="1" id="searchInput" data-search-type="question"
+                class="form-input search-suggestion"> {!! $quizQuestion?->question?->name !!} </textarea>
+            <div class="search-show"></div>
+            <span class="text-danger error-text title_err"></span>
+        </div>
+        <div>
+            <label for="quiz-grade" class="form-label">{{ translate('Quiz Mark') }}</label>
+            <input type="number" name="mark" value="{!! $quizQuestion->mark !!}" id="quiz-grade"
+                class="form-input"></input>
+            <span class="text-danger error-text mark_err"></span>
+        </div>
+        <div>
+            <label class="form-label">{{ translate('Quiz Type') }}</label>
+            <select class="singleSelect2 quiz-type-list" name="question_type" required>
+                <option selected disabled>{{ translate('Select quiz Question type') }}</option>
+                <option value="multiple-choice"
+                    {{ $quizQuestion->question_type == \Modules\LMS\Enums\QuestionTypes::MULTIPLE ? 'selected' : '' }}>
+                    {{ translate('Multiple choice') }}
+                </option>
+                <option value="single-choice"
+                    {{ $quizQuestion->question_type == \Modules\LMS\Enums\QuestionTypes::SINGLE ? 'selected' : '' }}>
+                    {{ translate('Single choice') }}
+                </option>
+                <option value="fill-in-blank"
+                    {{ $quizQuestion->question_type == \Modules\LMS\Enums\QuestionTypes::FILL_IN_BLANK ? 'selected' : '' }}>
+                    {{ translate('Fill in the blank') }}
+                </option>
+            </select>
+            <span class="text-danger error-text question_type_err"></span>
+        </div>
+        <div class="answer-list-area">
+            @if ($quizQuestion->question_type == \Modules\LMS\Enums\QuestionTypes::FILL_IN_BLANK)
+                @php
+                    $list = [];
+                    foreach ($quizQuestion->questionAnswers as $questionAnswer) {
+                        $list[] = $questionAnswer?->answer?->name;
+                    }
+                @endphp
+                <div class="mt-4 mb-4">
+                    <label for="fill-blank-answer" class="form-label">
+                        {{ translate('Enter the correct answer for blank') }}(_______).
+                    </label>
+                    <input type="text"
+                        id="fill-blank-answer"
+                        name="answers[]"
+                        class="form-input"
+                        placeholder="{{ translate('e.g. apple (use commas for multiple: apple, orange)') }}"
+                        value="{{ implode(', ', array_filter(array_map('trim', $list))) }}">
+                    <small class="text-gray-400 dark:text-dark-text mt-1.5 block text-sm">
+                        {{ translate('Separate multiple correct answers with commas.') }}
+                    </small>
                 </div>
-                <div class="mt-4">
-                    <label for="quiz-grade" class="form-label">{{ translate('Quiz Mark') }}</label>
-                    <input type="number" name="mark" value="{!! $quizQuestion->mark !!}" id="quiz-grade"
-                        class="form-input"></input>
-                    <span class="text-danger error-text mark_err"></span>
-                </div>
-                <div class="mt-4">
-                    <label class="form-label">{{ translate('Quiz Type') }}</label>
-                    <select class="singleSelect2 quiz-type-list" name="question_type" required>
-                        <option selected disabled>{{ translate('Select quiz Question type') }}</option>
-                        <option value="multiple-choice"
-                            {{ $quizQuestion->question_type == \Modules\LMS\Enums\QuestionTypes::MULTIPLE ? 'selected' : '' }}>
-                            {{ translate('Multiple choice') }}
-                        </option>
-                        <option value="single-choice"
-                            {{ $quizQuestion->question_type == \Modules\LMS\Enums\QuestionTypes::SINGLE ? 'selected' : '' }}>
-                            {{ translate('Single choice') }}
-                        </option>
-                        <option value="fill-in-blank"
-                            {{ $quizQuestion->question_type == \Modules\LMS\Enums\QuestionTypes::FILL_IN_BLANK ? 'selected' : '' }}>
-                            {{ translate('Fill in the blank') }}
-                        </option>
-                    </select>
-                    <span class="text-danger error-text question_type_err"></span>
-                </div>
-                <div class="answer-list-area">
-                    @if ($quizQuestion->question_type == \Modules\LMS\Enums\QuestionTypes::FILL_IN_BLANK)
-                        @php
-                            $list = [];
-                            foreach ($quizQuestion->questionAnswers as $questionAnswer) {
-                                $list[] = $questionAnswer?->answer?->name;
-                            }
-                        @endphp
-                        <div class="mt-10 mb-11">
-                            <label for="fill-blank-answer" class="form-label">
-                                {{ translate('Enter the correct answer for blank') }}(_______).
-                            </label>
-                            <input type="text"
-                                id="fill-blank-answer"
-                                name="answers[]"
-                                class="form-input"
-                                placeholder="{{ translate('e.g. apple (use commas for multiple: apple, orange)') }}"
-                                value="{{ implode(', ', array_filter(array_map('trim', $list))) }}">
-                            <small class="text-gray-400 dark:text-dark-text mt-1.5 block text-sm">
-                                {{ translate('Separate multiple correct answers with commas.') }}
-                            </small>
-                        </div>
-                    @else
-                        <button type="button" aria-label="Add quiz answer option"
-                            class="btn b-solid btn-primary-solid addQuizAns mt-3"
-                            data-quiztype="{{ $quizQuestion->question_type }}"> {{ translate('Add Answer') }}
-                        </button>
-                        <ul class="flex flex-col gap-2 mt-5 quiz-ans-container"
-                            data-length="{{ $quizQuestion?->questionAnswers?->count() }}">
-                            @foreach ($quizQuestion->questionAnswers as $index => $questionAnswer)
-                                <li class="border border-input-border rounded-lg p-2 removeable-parent">
-                                    <div class="flex gap-2 relative">
-                                        <textarea name="answers[{{ $index }}][name]" placeholder="Option 1" id="searchInput" data-search-type="answer"
-                                            class="form-input search-suggestion" rows="1"> {!! $questionAnswer?->answer?->name !!}</textarea>
+            @else
+                <button type="button" aria-label="Add quiz answer option"
+                    class="btn b-solid btn-primary-solid addQuizAns mt-3"
+                    data-quiztype="{{ $quizQuestion->question_type }}"> {{ translate('Add Answer') }}
+                </button>
+                <ul class="flex flex-col gap-2 mt-5 quiz-ans-container"
+                    data-length="{{ $quizQuestion?->questionAnswers?->count() }}">
+                    @foreach ($quizQuestion->questionAnswers as $index => $questionAnswer)
+                        <li class="border border-input-border rounded-lg p-2 removeable-parent">
+                            <div class="flex gap-2 relative">
+                                <textarea name="answers[{{ $index }}][name]" placeholder="Option 1" id="searchInput" data-search-type="answer"
+                                    class="form-input search-suggestion" rows="1"> {!! $questionAnswer?->answer?->name !!}</textarea>
 
-                                        <button type="button" aria-label="Remove option button"
-                                            class="btn b-outline btn-danger-outline btn-sm max-h-10 remove-parent-button">
-                                            <i class="ri-close-line text-inherit text-[13px]"></i>
-                                        </button>
-                                        <div class="search-show"></div>
-                                    </div>
-                                    <div class="leading-none flex items-center gap-2 mt-2">
-                                        <label for="corrects{{ $index }}"
-                                            class="inline-flex items-center cursor-pointer">
-                                            @if ($quizQuestion->question_type == \Modules\LMS\Enums\QuestionTypes::MULTIPLE)
-                                                <input type="checkbox" id="corrects{{ $index }}"
-                                                    name="answers[{{ $index }}][correct]"
-                                                    class="appearance-none peer"
-                                                    {{ $questionAnswer->correct == 1 ? 'checked' : '' }}>
-                                                <div class="switcher switcher-primary-solid"></div>
-                                            @else
-                                                <input type="radio" id="corrects{{ $index }}"
-                                                    name="answers[{{ $index }}][correct]"
-                                                    class="radio radio-primary"
-                                                    {{ $questionAnswer->correct == 1 ? 'checked' : '' }}>
-                                            @endif
-                                        </label>
-                                        <div class="text-gray-500 font-medium inline-block">
-                                            {{ translate('Check if this is Correct') }}
-                                        </div>
-                                    </div>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </div>
-            </div>
-            <br>
-             <div class="flex-center">
+                                <button type="button" aria-label="Remove option button"
+                                    class="btn b-outline btn-danger-outline btn-sm max-h-10 remove-parent-button">
+                                    <i class="ri-close-line text-inherit text-[13px]"></i>
+                                </button>
+                                <div class="search-show"></div>
+                            </div>
+                            <div class="leading-none flex items-center gap-2 mt-2">
+                                <label for="corrects{{ $index }}"
+                                    class="inline-flex items-center cursor-pointer">
+                                    @if ($quizQuestion->question_type == \Modules\LMS\Enums\QuestionTypes::MULTIPLE)
+                                        <input type="checkbox" id="corrects{{ $index }}"
+                                            name="answers[{{ $index }}][correct]"
+                                            class="appearance-none peer"
+                                            {{ $questionAnswer->correct == 1 ? 'checked' : '' }}>
+                                        <div class="switcher switcher-primary-solid"></div>
+                                    @else
+                                        <input type="radio" id="corrects{{ $index }}"
+                                            name="answers[{{ $index }}][correct]"
+                                            class="radio radio-primary"
+                                            {{ $questionAnswer->correct == 1 ? 'checked' : '' }}>
+                                    @endif
+                                </label>
+                                <div class="text-gray-500 font-medium inline-block">
+                                    {{ translate('Check if this is Correct') }}
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+        </div>
+        <div class="flex-center mt-4 pb-4">
             <button type="submit" aria-label="Update quiz"
                 class="btn b-solid btn-primary-solid w-1/2">{{ translate('Update Quiz') }}</button>
-
         </div>
-        </div>
-       
-        </form>
+    </form>
     <script src="{{ asset('lms/assets/js/vendor/select2.min.js') }} "></script>
 
     <script>

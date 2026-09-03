@@ -363,9 +363,9 @@ $(function () {
         let writeWordText = (typeof writeCorrectWord !== 'undefined' && writeCorrectWord) ? writeCorrectWord : 'Enter the correct answer for blank';
 
         if (quizType == "multiple-choice" || quizType == "single-choice") {
-            ansList.html(`<div class="mt-10">
+            ansList.html(`<div class="mt-4">
                 <button type="button" class="btn b-solid btn-primary-solid addQuizAns" data-quiztype="${quizType}">${addAnswerText}</button>
-                <ul class="flex flex-col gap-2 mt-5 quiz-ans-container" data-length="1">
+                <ul class="flex flex-col gap-2 mt-4 quiz-ans-container" data-length="1">
                     <li class="border border-input-border rounded-lg p-2 removeable-parent">
                         <div class="flex gap-2 relative">
                             <textarea name="answers[0][name]" placeholder="${answerOptionText}" id="searchInput" data-search-type="answer" class="form-input search-suggestion" rows="1"></textarea>
@@ -392,7 +392,7 @@ $(function () {
             </div>`);
         } else if (quizType == "fill-in-blank") {
             ansList.html(`
-            <div class="mt-10 mb-11">
+            <div class="mt-4 mb-4">
                 <label for="fill-blank-answer" class="form-label">${writeWordText} (_______).</label>
                 <input type="text" id="fill-blank-answer" name="answers[]" class="form-input"
                     placeholder="e.g. apple (use commas for multiple: apple, orange)">
